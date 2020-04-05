@@ -104,7 +104,7 @@ void setup() {
   initStart -> Start();
 }
 
-
+// This function is called to check if the user has pressed the button that confirms going to the triggering stage
 void checkConfirm () {
   if(digitalRead(confirm)) {
     confirmPress =!confirmPress;
