@@ -41,7 +41,7 @@ int dummyZero = -2; // variable that helps us change to Trigger mode
 int dummyOp [2] = {-3,-3};
 
 int recInit= -1;
-#define confirm 2 
+#define CONFIRM 2 
 boolean confirmPress=false;
 
 // define daud rate
@@ -82,7 +82,7 @@ boolean initTimeout = false;
 
 void setup() {
   // put your setup code here, to run once:
-  pinMode(confirm, INPUT);
+  pinMode(CONFIRM, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(BAUD_RATE);
   printf_begin();
@@ -106,7 +106,7 @@ void setup() {
 
 // This function is called to check if the user has pressed the button that confirms going to the triggering stage
 void checkConfirm () {
-  if(digitalRead(confirm)) {
+  if(digitalRead(CONFIRM)) {
     confirmPress =!confirmPress;
     baseRadio.flush_rx();
   }
@@ -238,10 +238,10 @@ void getCurrentData () {
 }
 
 void sendThresh (void) {
-  int gotByteT;
-  byte pipeNumT;
-  int gotByteO;
-  byte pipeNumO;
+  int gotByte;
+  byte pipeNum;
+  //int gotByteO;
+  //byte pipeNumO;
   for(byte node = 0; node < MAX_SENSORS; node++) {
     //baseRadio.stopListening();
     if((sensorRCInit[node] == 1) && (sensorRCThresh[node]) != 1) {
@@ -260,11 +260,11 @@ void sendThresh (void) {
         if(timeout) {
           Serial.println("Sensor did not respond for the Threshold");
         } else {
-            baseRadio.read(&gotByteT, sizeof(gotByteT));
-            if(gotByteT == -2) {
-              Serial.println(gotByteT);
-              if(sensorRCThresh[pipeNumT - 1] == 0) {
-                sensorRCThresh[pipeNumT - 1] = 1 ;
+            baseRadio.read(&gotByte, sizeof(gotByte));
+            if(gotByte == -2) {
+              Serial.println(gotByte);
+              if(sensorRCThresh[pipeNum - 1] == 0) {
+                sensorRCThresh[pipeNum - 1] = 1 ;
                 Serial.print("Sensor "); 
                 Serial.print(node); 
                 Serial.println(" got the Threshold");
@@ -295,11 +295,11 @@ void sendThresh (void) {
          if(timeout) {
            Serial.println("Sensor did not respond for the operator");
          } else {
-             baseRadio.read(&gotByteO, sizeof(gotByteO));
-             Serial.println(gotByteO);
-             if((gotByteO == -3) || (gotByteO == -4)) {
-               if(sensorRCOP[pipeNumO - 1] == 0) {
-                 sensorRCOP[pipeNumO - 1] = 1;
+             baseRadio.read(&gotByte, sizeof(gotByte));
+             Serial.println(gotByte);
+             if((gotByte == -3) || (gotByte == -4)) {
+               if(sensorRCOP[pipeNum - 1] == 0) {
+                 sensorRCOP[pipeNum - 1] = 1;
                  Serial.print("Sensor "); 
                  Serial.print(node); 
                  Serial.println(" got the Operator");
