@@ -39,23 +39,24 @@ enum stage {
 };
 
 // Enumeration used to determine whether the timeout has passed for multiple sensors triggers to be "simultaneously" sent
-
 enum stage systemState = SYS_INIT;
 
 boolean trigFail = false;
 
-#define MAX_SENSORS 2 // change that to add more sensors to your system
+// Change that to add more sensors to your system. Maximum 6 sensors
+#define MAX_SENSORS 2 
 
-int dummyZero[MAX_SENSORS] = {100, 100}; // variable that helps us change to Trigger mode 
+// Variable that helps us change to Trigger mode. For more sensors add value 100 inside the brackets according to the number os sensors 
+int dummyZero[MAX_SENSORS] = {100, 100};  
 
 // Variable table that holds operator > or < for each sensor  
 // During User Config stage depending on user choice the value might change
-// form -3 to -4. -3 means > and -4 means <
-
+// From -3 to -4. -3 means > and -4 means <
+// For more sensors add corresponding values accordingly
 int dummyOp[MAX_SENSORS] = {-3,-3};
 
 int recInit= -1;
-#define CONFIRM 2 
+
 boolean confirmPress=false;
 
 
@@ -66,27 +67,29 @@ boolean confirmPress=false;
 #define PIN_CE 9
 #define PIN_CSN 10
 
-// define pin for the flash when it's to be triggered 
+// Define pin for the flash when it's to be triggered 
 #define PIN_FLASH 6
 
-uint8_t sensorCtr = 0; // variable that holds the number of sensors recognized in Initialization stage
+// Variable that holds the number of sensors recognized in Initialization stage
+uint8_t sensorCtr = 0; 
 
-uint8_t tmp = 0; // a variable that helps us determine if the initialization stage completed succesfully
+// Variable that helps us determine if the initialization stage completed succesfully
+uint8_t tmp = 0; 
 uint8_t tmpTrig = 0;
 
 RF24 baseRadio(PIN_CE,PIN_CSN);
 
-// setup radio pipe addresses for each node for the base to read and write
+// Setup radio pipe addresses for each node for the base to read and write
 // To add extra sensors, add the addresses for each sensor accordingly
-// Also change the size of the tables 
 const uint64_t wAddresses[] = {0xB00B1E50D2LL, 0xB00B1E50C3LL};  //Create pipe addresses for the 2 nodes to recieve data, the "LL" is for LongLong type
 const uint64_t rAddresses[] = {0xB00B1E50B1LL, 0xB00B1E50A4LL};  //Create pipe addresses for the 2 nodes to transmit data, the "LL" is for LongLong type
 
-// simple array for each sensor data, in the form [sensor_id, return_count]
-// for support of more sensors change the table size and starting values accordingly
+// Simple array for each sensor data, in the form [sensor_id, return_count]
+// For support of more sensors change the table size and starting values accordingly
 int sensorData[MAX_SENSORS][MAX_SENSORS] = {{1, 1}, {2, 1}};
 
-// arrays to suggest that the Init and Threshold options were received
+// Arrays to suggest that the Init,Threshold and Operator options were received
+// To support more sensors add 0 values inside the brackets according to the number of sensors
 int sensorRCInit[MAX_SENSORS] = {0,0};
 int sensorRCThresh [MAX_SENSORS] = {0,0};
 int sensorRCOP [MAX_SENSORS] = {0,0};
@@ -101,33 +104,51 @@ TimerObject *triggTimer = new TimerObject(2);
 byte triggCount = 0;
 boolean triggTimeout = false; 
 
-boolean triggerTrue[MAX_SENSORS] = {false, false}; // array of boolean values for each sensor that turn into true when the according sensor sends a trigger
-byte triggerLogic = 1; // byte that represents if we want an OR logic or an AND logic between the sensor values in the trigger condition. 0 is for AND and 1 is for OR
-byte newTrigger = false; //boolean value that will be used to determine if a message the base receives during SYS_TRIG is a new trigger for a sensor that hasn't already sent a trigger
-int triggerCtr = 0; //variable that represents how many sensors have already sent their trigger value
+// Array of boolean values for each sensor that turn into true when the according sensor sends a trigger
+// To support more sensors add false values inside the brackets according to the number of sensors
+boolean triggerTrue[MAX_SENSORS] = {false, false}; 
+
+// Byte that represents if we want an OR logic or an AND logic between the sensor values in the trigger condition. 
+// 0 is for AND and 1 is for OR
+byte triggerLogic = 0; 
+
+// Boolean value that will be used to determine if a message the base receives during SYS_TRIG 
+// is a new trigger for a sensor that hasn't already sent a trigger
+byte newTrigger = false; 
+
+// Variable that represents how many sensors have already sent their trigger value
+int triggerCtr = 0;
+
+// Variable that stores the amount of delay the user chooses between true trigger function and flash/camera trigger
+int triggerDelay=0;
+
 bool timeout = false;
 //unsigned long startTimer;
 
 // The following variables are used for the menu in system configuration mode 
-int pic = 0;
+int pic = 1000;
 int maxPics_L1 = 5000;
 int maxPics_L2 = 3;
 int currentPointLine;
 int menuLayer = 1; 
 
-OneButton button(CONFIRM, true);
+// The following variables are used for the buttons and navigation in the menu
+#define CONFIRM 2 
+#define BUTTON_BRD 12
+OneButton buttonConfirm(CONFIRM, true);
+OneButton button(BUTTON_BRD, true);
+long lastMillis = 0;
+long maxTime = 30000;
 
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+// OLED display width, in pixels
+#define SCREEN_WIDTH 128 
+
+// OLED display height, in pixels
+#define SCREEN_HEIGHT 64 
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 #define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-
-
-//#if (SSD1306_LCDHEIGHT != 64)
-//#error("Height incorrect, please fix Adafruit_SSD1306.h!");
-//#endif
 
 // 0X3C+SA0 - 0x3C or 0x3D
 #define I2C_ADDRESS 0x3C
@@ -138,22 +159,26 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 //SSD1306AsciiWire display;
 
 void setup() {
-  // put your setup code here, to run once:
+  
+  // Put your setup code here, to run once:
   Wire.begin();
   Wire.setClock(400000L);
-//  #if RST_PIN >= 0
-//    display.begin(&Adafruit128x64, I2C_ADDRESS, RST_PIN);
-//  #else // RST_PIN >= 0
-//    display.begin(&Adafruit128x64, I2C_ADDRESS);
-//  #endif // RST_PIN >= 0
-//
-//  display.setFont(System5x7);
-//  
-//  #if INCLUDE_SCROLLING == 0
-//  #error INCLUDE_SCROLLING must be non-zero.  Edit SSD1306Ascii.h
-//  #endif //  INCLUDE_SCROLLING
-//  // Set auto scrolling at end of window.
-//  display.setScrollMode(SCROLL_MODE_AUTO);
+  
+  // Setup for buttons 
+  button.attachClick(click);
+  button.attachDoubleClick(doubleClick);
+  button.attachLongPressStop(longPressStop);
+  button.attachLongPressStart(longPressStart);
+  button.setDebounceTicks(100);
+  button.setClickTicks(600);
+
+  // The following lines are used for the setup of the screen 
+  
+  //#if INCLUDE_SCROLLING == 0
+  //#error INCLUDE_SCROLLING must be non-zero.  Edit SSD1306Ascii.h
+  //#endif //  INCLUDE_SCROLLING
+  // Set auto scrolling at end of window.
+  //display.setScrollMode(SCROLL_MODE_AUTO);
   Serial.begin(BAUD_RATE);
   //SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
@@ -161,37 +186,45 @@ void setup() {
     for(;;); // Don't proceed, loop forever
   }
   display.clearDisplay();
-//  display.display();
-  button.attachClick(click);
-  button.attachDoubleClick(doubleClick);
-  button.attachLongPressStop(longPressStop);
-  button.attachLongPressStart(longPressStart);
+
+  // The following lines are used to set input and output pins
   pinMode(CONFIRM, INPUT);
+  pinMode(BUTTON_BRD, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(PIN_FLASH, OUTPUT);
   
   printf_begin();
   Serial.println("Init test ");
+
+  // The following lines setup the RF settings for the base system
+  // To support mosre sensors repeat lines 223 and 224 accordingly
+  // Some lines are commented and can be used for different settings is needed
   baseRadio.begin();
   baseRadio.setAutoAck(false);
   baseRadio.setPALevel(RF24_PA_LOW);
- // baseRadio.setDataRate(RF24_1MBPS);
-  //baseRadio.setChannel(0x76);
+  //baseRadio.setDataRate(RF24_1MBPS); // Uncomment for Data Rate Settings
+  //baseRadio.setChannel(0x76);  //Uncomment for Channel Settings
   baseRadio.enableDynamicPayloads();
-  //baseRadio.setRetries(5, 5);
-  //baseRadio.enableAckPayload();
-  //baseRadio.setPayloadSize(sizeof(sensorData));
+  //baseRadio.setRetries(5, 5);  //Uncomment for Retries 
+  //baseRadio.enableAckPayload();  //Uncomment for Acks
+  //baseRadio.setPayloadSize(sizeof(sensorData));  //Uncomment for Payload Size
   baseRadio.openReadingPipe(1,rAddresses[0]);
   baseRadio.openReadingPipe(2,rAddresses[1]);
   baseRadio.startListening();
   baseRadio.printDetails();
 
+  // The following lines are used for settings of timers that are needed
   initStart -> setOnTimer(&checkInitTimeout);
   triggTimer -> setOnTimer(&checkTriggTimeout);
   initStart -> Start();
+
+  
 }
 
-
+/*************************************************************************
+       This function checks if the button for sending the
+       Thresholds and Operators has been pressed
+ *************************************************************************/
 void checkConfirm (void) {
   if(digitalRead(CONFIRM)) {
     confirmPress =!confirmPress;
@@ -200,11 +233,16 @@ void checkConfirm (void) {
   //confirmPress =!confirmPress;
 }
 
-// This function checks if the button for sending the
-// Thresholds and Operators hase been pressed
-
+/****************************************************************************************
+      This is the loop function. It is executed on every cycle and is the main code 
+ ***************************************************************************************/
 void loop () {
-  // put your main code here, to run repeatedly:
+  // put your main code here, to run repeatedly
+  button.tick();
+  if (millis() >= (lastMillis+maxTime)) {
+    pic = 1000;
+    menuLayer=1;
+  }
   drawMenu();
   if(systemState == SYS_INIT) {
     initStart->Update();
@@ -324,10 +362,11 @@ void loop () {
   }
 }
 
-// This function is called right after we get a recognition message from a sensor
-// The functions responds to the sensor with the same value to let it know the base
-// received the initialization message
-
+/*******************************************************************************************
+       This function is called right after we get a recognition message from a sensor
+       The functions responds to the sensor with the same value to let it know the base
+       received the initialization message
+ ******************************************************************************************/
 bool sendRecValid (byte pipeNum) {
   bool worked;
   baseRadio.stopListening();
@@ -341,9 +380,10 @@ bool sendRecValid (byte pipeNum) {
   return worked; 
 }
 
-// The base should wait for Initilization messages from sensors for 15s
-// This function checks if this specific amount of time has passed
-
+/*******************************************************************************
+       The base should wait for Initilization messages from sensors for 15s
+       This function checks if this specific amount of time has passed
+ ******************************************************************************/
 void checkInitTimeout (void) {
   initCount++;
   if(initCount >= 15) { 
@@ -351,10 +391,11 @@ void checkInitTimeout (void) {
   }
 }
 
-// When we have more than one sensors and the condition between sensors is AND
-// The base waits until one of the sensors is triggered. When that happens this 
-// Timer function helps us determine if the trigger window has elapsed
-
+/***************************************************************************************
+       When we have more than one sensors and the condition between sensors is AND
+       The base waits until one of the sensors is triggered. When that happens this 
+       Timer function helps us determine if the trigger window has elapsed
+ **************************************************************************************/
 void checkTriggTimeout (void) {
   triggCount++;
   if(triggCount >= 1) {
@@ -362,16 +403,16 @@ void checkTriggTimeout (void) {
   }
 }
 
-
-// This function checks the Radio for Initialization messages from sensors
-// While there are payloads available the Base checks which sensor sent the
-// payload. If the sensor hasn't already sent an Initialization message, then
-// the corresponding value of the array that is used to know which sensor
-// was already recognized is set to 1. If the sensor has already been recognized
-// the message gets ignored. If the sensor has not been recognized before
-// the base responds with the same Initialization message so that the sensor can know
-// it got recognized. If the response fails to be sent, an accordng message is printed
-
+/**********************************************************************************************
+       This function checks the Radio for Initialization messages from sensors
+       While there are payloads available the Base checks which sensor sent the
+       payload. If the sensor hasn't already sent an Initialization message, then
+       the corresponding value of the array that is used to know which sensor
+       was already recognized is set to 1. If the sensor has already been recognized
+       the message gets ignored. If the sensor has not been recognized before
+       the base responds with the same Initialization message so that the sensor can know
+       it got recognized. If the response fails to be sent, an accordng message is printed
+ *********************************************************************************************/
 void checkRadioForInit (void) {
   byte pipeNum = 0; 
   int gotByte = 0;
@@ -393,9 +434,10 @@ void checkRadioForInit (void) {
   }
 }
 
-// This functions is used when we are ready to end the Initialization stage
-// and go into User Configuration stage. 
-
+/**********************************************************************************
+       This functions is used when we are ready to end the Initialization stage
+       and go into User Configuration stage. 
+ *********************************************************************************/
 void endInit (void) {
   if(sensorCtr != 0) {
     for(byte node = 0; node < MAX_SENSORS; node++) {
@@ -420,10 +462,11 @@ void endInit (void) {
   //screenRefresh();
 }
 
-// This function is called from the base in User Config stage to get the sensor data
-// The base waits for messages from the sensors, if there is a payload available
-// the base shows the senssor number and the according value.
-
+/******************************************************************************************
+       This function is called from the base in User Config stage to get the sensor data
+       The base waits for messages from the sensors, if there is a payload available
+       the base shows the senssor number and the according value.
+ *****************************************************************************************/
 void getCurrentData (void) {
   byte pipeNum = 0;
   while(baseRadio.available(&pipeNum)) {
@@ -436,9 +479,10 @@ void getCurrentData (void) {
   }
 }
 
-// This function is used to send to all the sensors, one by one, both the Threshold 
-// And the Operator to which they should sned a trigger value to the base
-
+/******************************************************************************************
+       This function is used to send to all the sensors, one by one, both the Threshold 
+       And the Operator to which they should sned a trigger value to the base
+ *****************************************************************************************/
 void sendThresh (void) {
   int gotByte;
   byte pipeNum;
@@ -515,9 +559,10 @@ void sendThresh (void) {
   baseRadio.startListening();
 }
 
-// This function is used to check if all recognized sensors 
-// Have received both the Threshold and the Operator
-
+/*************************************************************************
+       This function is used to check if all recognized sensors 
+       Have received both the Threshold and the Operator
+ ************************************************************************/
 int checkRCThresh (void) {
   int tmp=0;
   for(byte node = 0; node < MAX_SENSORS; node++) {
@@ -529,22 +574,24 @@ int checkRCThresh (void) {
   return tmp; 
 }
 
-// This function is used to get out of USer Configuration stage of 
-// The System and go to the actual waiting for triggers
-
+/*************************************************************************
+       This function is used to get out of USer Configuration stage of 
+       The System and go to the actual waiting for triggers
+ *************************************************************************/
 void endConfig (void) {
   baseRadio.startListening();
   systemState = SYS_TRIG;
   screenRefresh();
 }
 
-// This function is used to check the base radio for new messages
-// During the time when the base wiats for trigger messages. If a 
-// message is received from a valid sensor that exists and hasn't 
-// already sent a trigger, then the function changes values to the
-// according tables and returns a true value. In any other case it 
-// returns a false value 
-
+/*************************************************************************
+       This function is used to check the base radio for new messages
+       During the time when the base wiats for trigger messages. If a 
+       message is received from a valid sensor that exists and hasn't 
+       already sent a trigger, then the function changes values to the
+       according tables and returns a true value. In any other case it 
+       returns a false value 
+ *************************************************************************/
 boolean checkForTriggers (void) {
   byte pipeNum;
   int sensorValue = 0;
@@ -628,11 +675,886 @@ void drawInitMenu (void) {
    screenRefresh();
 }
 
-// This function is called to draw the menu of the User Configuration stage
-
+/*****************************************************************************************
+       This function is called to draw the menu of the User Configuration stage
+ ****************************************************************************************/
 void drawConfigMenu (void) {
   screenHeader();
-  screenRefresh();
+  int startingPointRow = 20;
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  /*************************************************************************
+           The next lines of code are used for the fisrt layer
+           of the menu. 
+   *************************************************************************/
+
+    //    LAYER 1   //
+  //    CHOICE 1    //
+  if (pic == 1000) {
+    //button.tick();
+    //screenHeader();
+    if(currentPointLine <= 20) {
+      display.setCursor(0, currentPointLine);  display.print (">SET THRESHOLD");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" HELP");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" CONFIRM");
+    //screenRefresh();
+    }
+
+    else if(currentPointLine > 20) {
+      display.setCursor(0, currentPointLine);  display.print (">SET THRESHOLD");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" HELP");
+    }
+  }
+
+  //    LAYER 1   //
+  //    CHOICE 2    //
+  if (pic == 2000) {
+    //button.tick();
+    if(currentPointLine <= 20) {
+      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (">TRIGGER DELAY");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" HELP");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" CONFIRM");
+    //screenRefresh();
+    }
+
+    else if(currentPointLine > 20) {
+      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (">TRIGGER DELAY");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" HELP");
+    }
+  }
+
+  //    LAYER 1   //
+  //    CHOICE 3    //
+  if (pic == 3000) {
+    //button.tick();
+    if(currentPointLine <= 20) {
+      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (">TRIGGER LOGIC");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" HELP");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" CONFIRM");
+    //screenRefresh();
+    }
+
+    else if(currentPointLine > 20) {
+      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (">TRIGGER LOGIC");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" HELP");
+    }
+  }
+
+  //    LAYER 1   //
+  //    CHOICE 4    //
+  if (pic == 4000) {
+    //button.tick();
+    if(currentPointLine <= 20) {
+      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (">HELP");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" CONFIRM");
+    //screenRefresh();
+    }
+
+    else if(currentPointLine > 20) {
+      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (">HELP");
+    }
+  }  
+
+  //    LAYER 1   //
+  //    CHOICE 5    //
+  if (pic == 5000) {
+    //button.tick();
+    if(currentPointLine <= 20) {
+      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" HELP");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (">CONFIRM");
+    //screenRefresh();
+    }
+
+    else if(currentPointLine > 20) {
+      display.setCursor(0, currentPointLine);  display.print (">CONFRIM");
+//      currentPointLine = currentPointLine + 8;
+//      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+//      currentPointLine = currentPointLine + 8;
+//      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+//      currentPointLine = currentPointLine + 8;
+//      display.setCursor(0, currentPointLine);  display.print (" HELP");
+    }
+  }
+
+/*************************************************************************
+         The next lines of code are used for the second layer
+         of the menu. To support more sensors uncommment the
+         according choices. By default only two sensors are
+         supported, so only choices 1100 and 1200 are
+         uncommented. Make sure to change accordingly the 
+         conditions in button handling for correct navigation  
+ *************************************************************************/
+
+
+  //    LAYER 2  //
+  //    CHOICE 1.1 //
+  if (pic == 1100) {
+    button.tick();
+    //screenHeader();
+    //display.setCursor(0, currentPointLine);
+    for (byte node = 0 ; node < MAX_SENSORS ; node++) {
+      display.setCursor(0, currentPointLine);
+      if (node == 0){
+        if (sensorRCInit[node] == 1) {
+          display.print (">SENSOR 0");
+        } else {
+          display.print (" N/A");
+        }
+        currentPointLine = currentPointLine + 8;
+      } else {
+          if (sensorRCInit[node] == 1) {
+            display.print (" SENSOR ");
+            display.setCursor(50 , currentPointLine);
+            display.print (node);
+          } else {
+              //display.print (" SENSOR ");
+              display.setCursor(0 , currentPointLine);
+              //display.print (node);
+              display.print (" N/A");           
+          }
+          currentPointLine = currentPointLine + 8;
+      }
+    }
+    //screenRefresh();
+  }
+
+  //    LAYER 2  //
+  //    CHOICE 1.2 //
+  if (pic == 1200) {
+    button.tick();
+    //screenHeader();
+    //display.setCursor(0, currentPointLine);
+    for (byte node = 0 ; node < MAX_SENSORS ; node++) {
+      display.setCursor(0, currentPointLine);
+      if (node == 1){
+        if (sensorRCInit[node] == 1) {
+          display.print (">SENSOR 1");
+        } else {
+          display.print (" N/A");
+        }
+        currentPointLine = currentPointLine + 8;
+      } else {
+          if (sensorRCInit[node] == 1) {
+            display.print (" SENSOR ");
+            display.setCursor(50 , currentPointLine);
+            display.print (node);
+          } else {
+              //display.print (" SENSOR ");
+              display.setCursor(0 , currentPointLine);
+              //display.print (node);
+              display.print (" N/A");           
+          }
+          currentPointLine = currentPointLine + 8;
+      }
+    }
+    //screenRefresh();
+  }
+
+//  //    LAYER 2  //
+//  //    CHOICE 1.3 //
+//  if (pic == 1300) {
+//    //display.setCursor(0, currentPointLine);
+//    for (byte node = 0 ; node < MAX_SENSORS ; node++) {
+//      display.setCursor(0, currentPointLine);
+//      if (node == 2){
+//        if (sensorRCInit[node] == 1) {
+//          display.print (">SENSOR 2");
+//        } else {
+//          display.print (" N/A");
+//        }
+//        currentPointLine = currentPointLine + 8;
+//      } else {
+//          if (sensorRCInit[node] == 1) {
+//            display.print (" SENSOR ");
+//            display.setCursor(25 , currentPointLine);
+//            display.print (node);
+//          } else {
+//              //display.print (" SENSOR ");
+//              display.setCursor(0 , currentPointLine);
+//              //display.print (node);
+//              display.print (" N/A");           
+//          }
+//          currentPointLine = currentPointLine + 8;
+//      }
+//    }
+//  }
+//
+//  //    LAYER 2  //
+//  //    CHOICE 1.4 //
+//  if (pic == 1400) {
+//    display.setCursor(0, currentPointLine);
+//    for (byte node = 0 ; node < MAX_SENSORS ; node++) {
+//      if (node == 3){
+//        if (sensorRCInit[node] == 1) {
+//          display.print (">SENSOR 3");
+//        } else {
+//          display.print (" N/A");
+//        }
+//        currentPointLine = currentPointLine + 8;
+//      } else {
+//          if (sensorRCInit[node] == 1) {
+//            display.print (" SENSOR ");
+//            display.setCursor(25 , currentPointLine);
+//            display.print (node);
+//          } else {
+//              //display.print (" SENSOR ");
+//              display.setCursor(0 , currentPointLine);
+//              //display.print (node);
+//              display.print (" N/A");           
+//          }
+//          currentPointLine = currentPointLine + 8;
+//      }
+//    }
+//  }
+//
+//
+//  //    LAYER 2  //
+//  //    CHOICE 1.5 //
+//  if (pic == 1500) {
+//    display.setCursor(0, currentPointLine);
+//    if (sensorCtr >= 4) {
+//      if (sensorRCInit[4] == 1) {
+//        display.print (">SENSOR 4");
+//      } else {
+//        display.print (" N/A");
+//      }
+//      currentPointLine = currentPointLine + 8;
+//      display.setCursor(0, currentPointLine);
+//      if (sensorRCInit[5] == 1) {
+//        display.print (" SENSOR 5");
+//      } else {
+//          display.print (" N/A");
+//      }
+////      currentPointLine = currentPointLine + 8;
+////      display.setCursor(0, currentPointLine);
+////      display.print (" BACK");
+//    } else {
+//       for (byte node = 0 ; node < MAX_SENSORS ; node++) {
+//         display.setCursor(0, currentPointLine);
+//         if (node == 4) {
+//           if (sensorRCInit[node] == 1) {
+//             display.print (">SENSOR 4");
+//           } else {
+//               display.print (" N/A");
+//           }
+//         } else {
+//             if (sensorRCInit[node] == 1) {
+//               display.print (" SENSOR ");
+//               display.setCursor(25 , currentPointLine);
+//               display.print (node);
+//             } else {
+//                 //display.print (" SENSOR ");
+//                 display.setCursor(0 , currentPointLine);
+//                 //display.print (node);
+//                 display.print (" N/A");           
+//             }             
+//         }
+//       }
+//    }
+//  }
+//
+//  //    LAYER 2  //
+//  //    CHOICE 1.6 //
+//  if (pic == 1600) {
+//    display.setCursor(0, currentPointLine);
+//    if (sensorCtr >= 4) {
+//      if (sensorRCInit[4] == 1) {
+//        display.print (" SENSOR 4");
+//      } else {
+//        display.print (" N/A");
+//      }
+//      currentPointLine = currentPointLine + 8;
+//      display.setCursor(0, currentPointLine);
+//      if (sensorRCInit[5] == 1) {
+//        display.print (">SENSOR 5");
+//      } else {
+//          display.print (" N/A");
+//      }
+////      currentPointLine = currentPointLine + 8;
+////      display.setCursor(0, currentPointLine);
+////      display.print (" BACK");      
+//    } else {
+//        if (sensorRCInit[5] == 1) {
+//          display.print (">SENSOR 5");
+//        } else {
+//            display.print (" N/A");
+//        }
+////        currentPointLine = currentPointLine + 8;
+////        display.setCursor(0, currentPointLine);
+////        display.print (" BACK");            
+//    }
+//  }
+
+  //    LAYER 2  //
+  //    CHOICE 2.1 //  
+  if (pic == 2100) {
+    if(currentPointLine <= 20) {
+      display.setCursor(0, currentPointLine);  display.print (">50 ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 100ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 150ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 200ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 300ms");
+    } else if(currentPointLine > 20) {
+        display.setCursor(0, currentPointLine);  display.print (">50 ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (" 100ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (" 150ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (" 200ms");
+        //currentPointLine = currentPointLine + 8;
+        //display.setCursor(0, currentPointLine);  display.print (" 300ms");
+    }
+
+  } 
+
+  //    LAYER 2  //
+  //    CHOICE 2.2 //  
+  if (pic == 2200) {
+    if(currentPointLine <= 20) {
+      display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (">100ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 150ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 200ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 300ms");
+    } else if(currentPointLine > 20) {
+        display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (">100ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (" 150ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (" 200ms");
+        //currentPointLine = currentPointLine + 8;
+        //display.setCursor(0, currentPointLine);  display.print (" 300ms");
+    }
+
+  }
+  //    LAYER 2  //
+  //    CHOICE 2.3 //  
+  if (pic == 2300) {
+    if(currentPointLine <= 20) {
+      display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 100ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (">150ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 200ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 300ms");
+    } else if(currentPointLine > 20) {
+        display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (" 100ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (">150ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (" 200ms");
+        //currentPointLine = currentPointLine + 8;
+        //display.setCursor(0, currentPointLine);  display.print (" 300ms");
+    }
+
+  }
+
+  //    LAYER 2  //
+  //    CHOICE 2.4 //  
+  if (pic == 2400) {
+    if(currentPointLine <= 20) {
+      display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 100ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 150ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (">200ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 300ms");
+    } else if(currentPointLine > 20) {
+        display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (" 100ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (" 150ms");
+        currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (">200ms");
+        //currentPointLine = currentPointLine + 8;
+        //display.setCursor(0, currentPointLine);  display.print (" 300ms");
+    }
+
+  }
+
+  //    LAYER 2  //
+  //    CHOICE 2.5 //  
+  if (pic == 2500) {
+    if(currentPointLine <= 20) {
+      display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 100ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 150ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (" 200ms");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);  display.print (">300ms");
+    } else if(currentPointLine > 20) {
+        //display.setCursor(0, currentPointLine);  display.print (">50 ms");
+        //currentPointLine = currentPointLine + 8;
+        //display.setCursor(0, currentPointLine);  display.print (" 100ms");
+        //currentPointLine = currentPointLine + 8;
+        //display.setCursor(0, currentPointLine);  display.print (" 150ms");
+        //currentPointLine = currentPointLine + 8;
+        //display.setCursor(0, currentPointLine);  display.print (" 200ms");
+        //currentPointLine = currentPointLine + 8;
+        display.setCursor(0, currentPointLine);  display.print (">300ms");
+    }
+
+  }
+
+  //    LAYER 2  //
+  //    CHOICE 3.1 //  
+  if (pic == 3100) {
+    display.setCursor(0, currentPointLine);  display.print (">OR");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);  display.print (" AND");
+  }
+
+  //    LAYER 2  //
+  //    CHOICE 3.2 //  
+  if (pic == 3200) {
+    display.setCursor(0, currentPointLine);  display.print (" OR");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);  display.print (">AND");
+  }
+
+  //    LAYER 2  //
+  //    CHOICE 4.1 //  
+  if (pic == 4100) {
+    display.setCursor(0, currentPointLine);
+    display.print("1 PRESS: NEXT CHOICE");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine); 
+    display.print("DOUBLE PRESS: GO BACK");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine); 
+    display.print("LONG PRESS: CONFIRM");
+  } 
+
+  //    LAYER 2  //
+  //    CHOICE 5.1 //  
+  if (pic == 5100) {
+    display.setCursor(0, currentPointLine); 
+    display.print("PROJECT NAME: PHOTOTUC");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine); 
+    display.print("CREATOR: SOTIRIS KORDAS");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine); 
+    display.print("YEAR: 2020");
+  }   
+
+
+ /*************************************************************************
+         The next lines of code are used for the third layer
+         of the menu. To support more sensors uncommment the
+         according choices. By default only two sensors are
+         supported, so only the sets of 1100 and 1200 are 
+         uncommented. Make sure to change accordingly the 
+         conditions in button handling for correct navigation  
+ *************************************************************************/
+
+  //    LAYER 3  //
+  //    CHOICE 1.1.1 //
+  if (pic == 1110) {
+    if (sensorRCInit[0] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (">THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(" OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+
+
+  //    LAYER 3  //
+  //    CHOICE 1.1.2 //
+  if (pic == 1120) {
+    if (sensorRCInit[0] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (" THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(">OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+
+  //    LAYER 3  //
+  //    CHOICE 1.2.1 //
+  if (pic == 1210) {
+    if (sensorRCInit[1] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (">THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(" OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+
+
+  //    LAYER 3  //
+  //    CHOICE 1.2.2 //
+  if (pic == 1220) {
+    if (sensorRCInit[1] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (" THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(">OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+
+ /*****************************************************************************************
+      Below are the choices for another 4 sensors when choosing between
+      threshold and operator choice. 
+      Uncomment the according section depending on how many more sensors are needed
+ *****************************************************************************************/
+
+ /*
+      //    LAYER 3  //
+  //    CHOICE 1.3.1 //
+  if (pic == 1310) {
+    if (sensorRCInit[2] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (">THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(" OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+
+
+  //    LAYER 3  //
+  //    CHOICE 1.3.2 //
+  if (pic == 1320) {
+    if (sensorRCInit[2] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (" THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(">OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+
+  //    LAYER 3  //
+  //    CHOICE 1.4.1 //
+  if (pic == 1410) {
+    if (sensorRCInit[3] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (">THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(" OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+
+
+  //    LAYER 3  //
+  //    CHOICE 1.4.2 //
+  if (pic == 1420) {
+    if (sensorRCInit[3] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (" THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(">OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+
+    //    LAYER 3  //
+  //    CHOICE 1.5.1 //
+  if (pic == 1510) {
+    if (sensorRCInit[4] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (">THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(" OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+
+
+  //    LAYER 3  //
+  //    CHOICE 1.5.2 //
+  if (pic == 1520) {
+    if (sensorRCInit[4] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (" THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(">OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+
+    //    LAYER 3  //
+  //    CHOICE 1.6.1 //
+  if (pic == 1610) {
+    if (sensorRCInit[5] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (">THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(" OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+
+
+  //    LAYER 3  //
+  //    CHOICE 1.6.2 //
+  if (pic == 1620) {
+    if (sensorRCInit[5] == 1) {
+      display.setCursor(0, currentPointLine);
+      display.print (" THRESHOLD VALUE");
+      currentPointLine = currentPointLine + 8;
+      display.setCursor(0, currentPointLine);
+      display.print(">OPERATOR");
+    } else {
+        display.setCursor(0, currentPointLine);
+        display.print("INVALID.GO BACk");
+    }
+  }
+ */
+
+  /*************************************************************************
+         The next lines of code are used for the fourth layer
+         of the menu. To support more sensors uncommment the
+         according choices. By default only two sensors are
+         supported, so only the sets of 1100 and 1200 are 
+         uncommented. Make sure to change accordingly the 
+         conditions in button handling for correct navigation  
+ *************************************************************************/
+  
+  //    LAYER 4  //
+  //    CHOICE 1.1.2.1 //
+  if (pic == 1121) {
+    display.setCursor(0, currentPointLine);
+    display.print (">GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(" LESSER ( < )");
+  }
+
+   //    LAYER 4  //
+  //    CHOICE 1.1.2.2 //
+  if (pic == 1122) {
+    display.setCursor(0, currentPointLine);
+    display.print (" GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(">LESSER ( < )");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.2.2.1 //
+  if (pic == 1221) {
+    display.setCursor(0, currentPointLine);
+    display.print (">GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(" LESSER ( < )");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.2.2.2 //
+  if (pic == 1222) {
+    display.setCursor(0, currentPointLine);
+    display.print (" GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(">LESSER ( < )");
+  }
+
+ /*****************************************************************************************
+      Below are the choices for another 4 sensors when choosing between
+      greater or lesser comparison to the threshold value.
+      Uncomment the according section depending on how many more sensors are needed
+ *****************************************************************************************/ 
+  /*
+  //    LAYER 4  //
+  //    CHOICE 1.3.2.1 //
+  if (pic == 1321) {
+    display.setCursor(0, currentPointLine);
+    display.print (">GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(" LESSER ( < )");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.3.2.2 //
+  if (pic == 1322) {
+    display.setCursor(0, currentPointLine);
+    display.print (" GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(">LESSER ( < )");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.4.2.1 //
+  if (pic == 1421) {
+    display.setCursor(0, currentPointLine);
+    display.print (">GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(" LESSER ( < )");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.4.2.2 //
+  if (pic == 1422) {
+    display.setCursor(0, currentPointLine);
+    display.print (" GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(">LESSER ( < )");
+  }
+
+    //    LAYER 4  //
+  //    CHOICE 1.5.2.1 //
+  if (pic == 1521) {
+    display.setCursor(0, currentPointLine);
+    display.print (">GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(" LESSER ( < )");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.5.2.2 //
+  if (pic == 1522) {
+    display.setCursor(0, currentPointLine);
+    display.print (" GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(">LESSER ( < )");
+  }
+
+    //    LAYER 4  //
+  //    CHOICE 1.6.2.1 //
+  if (pic == 1621) {
+    display.setCursor(0, currentPointLine);
+    display.print (">GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(" LESSER ( < )");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.6.2.2 //
+  if (pic == 1622) {
+    display.setCursor(0, currentPointLine);
+    display.print (" GREATER ( > )");
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(0, currentPointLine);
+    display.print(">LESSER ( < )");
+  }
+  */
+  
+  screenRefresh(); 
 }
 
 /*************************************************************************
@@ -664,37 +1586,339 @@ void drawTriggMenu (void) {
   }
 }
 
-//This fuction is called when a single press is detected on the button
-// Depending on the menu choice the function acts differently
-
+/******************************************************************************
+       This fuction is called when a single press is detected on the button
+       Depending on the menu choice the function acts differently
+ *****************************************************************************/
 void click (void) {
+  lastMillis = millis();
+  //Serial.println(pic);
+  
+ /***********************************************************************************
+        The following lines of code are used to determine the action of a single
+        button press on the first layer of the menu
+ ***********************************************************************************/
+  if (menuLayer == 1) {
+    if (pic == 0) {
+      pic = 1000;
+    } else if (pic == 1000) {
+        pic = 2000;
+    } else if (pic == 2000) {
+        pic = 3000;
+    } else if (pic == 3000) {
+        pic = 4000;
+    } else if (pic == 4000) {
+        pic = 5000;
+    } else if (pic == 5000) {
+        pic = 1000;
+    }
+  }
+
+ /***********************************************************************************
+        The following lines of code are used to determine the action of a single
+        button press on the second layer of the menu. To support more sensors 
+        change the value of the condition in line 1318 and 1320 accordingly.
+        Maximum of 6 sensors is suppoerted, maximum value of condition is 1700
+ ***********************************************************************************/
+  if (menuLayer == 2) {
+    if (pic > 1000 && pic < 1200) {
+      pic = pic + 100;
+    } else if (pic >= 1200 && pic <= 2000) {
+        pic = 1100;
+    } else if (pic > 2000 && pic < 2500) {
+        pic = pic + 100;
+    } else if (pic >= 2500 && pic <= 3000){
+        pic = 2100;
+    } else if (pic > 3000 && pic < 3200){
+        pic = pic + 100;
+    } else if (pic >= 3200 && pic <= 4000) {
+        pic = 3100;
+    }
+  }
+
+  if (menuLayer == 3) {
+    if ((pic >= 1100) && (pic < 1120)) {
+      pic = pic + 10;
+    } else if ((pic >= 1120) && (pic < 1200)) {
+        pic = 1110;
+    } else if ((pic >= 1200) && (pic < 1220)) {
+        pic = pic + 10;
+    } else if ((pic >= 1220) && (pic < 1300)) {
+        pic = 1210;
+    }
+
+    /************************************************************************************
+           The following lines should be uncommented accorind to how many
+           sensors the user want to have activated. These are the conditions
+           for the button actions on layer 3 of the menu, when the user will
+           chooce for each sensor a threshold or an operator. For just 2 sensors
+           leave everything as is.
+     ************************************************************************************/
+     /*   else if ((pic >= 1300) && (pic < 1320)) {
+          pic = pic +10;
+      } else if ((pic >= 1320) && (pic < 1400)) {
+          pic = 1310;
+      } else if ((pic >= 1400) && (pic < 1420)) {
+          pic = pic +10;
+      } else if ((pic >= 1420) && (pic < 1500)) {
+          pic = 1410;
+      } else if ((pic >= 1500) && (pic < 1520)) {
+          pic = pic +10;
+      } else if ((pic >= 1520) && (pic < 1600)) {
+          pic = 1510;
+      } else if ((pic >= 1600) && (pic < 1620)) {
+          pic = pic + 10;
+      } else if ((pic >= 1620) && (pic < 1700)) {
+          pic = 1610;
+      } */
+  }  
+
+  if (menuLayer == 4) {
+
+    /********************************************************************************
+          The following lines are used to detemine the single click action when
+          the user has chosen to select an operator. To support more sensors
+          uncomment the according if statements 
+     *******************************************************************************/
+    if (pic == 1121) {
+      pic = 1122;
+    } else if (pic == 1122) {
+        pic = 1121;
+    } else if (pic == 1221) {
+        pic = 1222;
+    } else if (pic == 1222) {
+        pic = 1221;
+    }/*else if (pic == 1321) {
+        pic = 1322;
+    } else if (pic == 1322) {
+        pic = 1321;
+    } else if (pic == 1421) {
+        pic = 1422;
+    } else if (pic == 1422) {
+        pic = 1421;
+    } else if (pic == 1521) {
+        pic = 1522;
+    } else if (pic == 1522) {
+        pic = 1521;
+    } else if (pic == 1621) {
+        pic = 1622;
+    } else if (pic == 1622) {
+        pic = 1621;
+    } */
+  }
   
 }
 
-// This function is called when a double click is detected on the button
-// Depending on the menu choice the user is on, the functions acts differently
-
+/**************************************************************************************
+       This function is called when a double click is detected on the button
+       Depending on the menu choice the user is on, the functions acts differently
+ *************************************************************************************/
 void doubleClick (void) {
-  
+  lastMillis = millis();
+  if (menuLayer == 2) {
+
+    /************************************************************************************************
+          Following lines are used for double button press action in second layer
+    ************************************************************************************************/
+    if (pic > 1000 && pic <= 1700) {
+          pic = 1000;
+    } else if (pic > 2000 && pic <= 3000) {
+        pic = 2000;
+    } else if (pic > 3000 && pic <= 4000) {
+        pic = 3000; 
+    } else if (pic > 4000 && pic <= 5000) {
+        pic = 4000;
+    } else if (pic > maxPics_L1) {
+        pic = maxPics_L1;
+    }
+    menuLayer = menuLayer - 1;
+  } else if (menuLayer == 3) {
+
+    /************************************************************************************************
+          Following lines are used for double button press action in the thrird layer.
+          Uncomment the else if cases according to the number of sensors
+    ************************************************************************************************/
+      if ((pic >= 1110) || (pic < 1200)) {
+        pic = 1100;
+      } else if ((pic >= 1210) || (pic < 1300)) {
+          pic = 1200;
+      } /*else if ((pic >= 1310) || (pic < 1400)) {
+          pic = 1300;
+      } else if ((pic >= 1410) || (pic < 1500)) {
+          pic = 1400;
+      } else if ((pic >= 1510) || (pic < 1600)) {
+          pic = 1500;
+      } else if ((pic >= 1610) || (pic < 1700)) {
+          pic = 1600; 
+      } */
+      menuLayer = menuLayer - 1;
+  } else if (menuLayer == 1) {
+    
+  } else if (menuLayer == 4) {
+
+    /************************************************************************************************
+          Following lines are used for double button press action when in the fourth layer.
+          Uncomment the else if cases according to the number of sensors
+    ************************************************************************************************/
+      if ((pic == 1121) || (pic == 1122)) {
+        pic = 1120;
+      } else if ((pic == 1221) || (pic == 1222)) {
+          pic = 1220;
+      } /*else if ((pic == 1321) || (pic == 1322)) {
+          pic = 1320;
+      } else if ((pic == 1421) || (pic == 1422)) {
+          pic = 1420;
+      } else if ((pic == 1521) || (pic == 1522)) {
+          pic = 1520;
+      } else if ((pic == 1621) || (pic == 1622)) {
+          pic = 1620;
+      } */
+      menuLayer = menuLayer - 1;
+  }
 }
-
-// This function is called when a long press of the button is detected
-// Depending on the menu choice that the user is on the function acts
-// in a different way
-
+/******************************************************************************
+       This function is called when a long press of the button is detected
+       Depending on the menu choice that the user is on the function acts
+       in a different way
+ *****************************************************************************/
 void longPressStart (void) {
-  
+  lastMillis = millis();
+
+  if (menuLayer == 1) {
+    pic = pic + 100;
+    menuLayer = menuLayer + 1;
+  } else if (menuLayer == 2) {
+
+    /************************************************************************************************
+          Following lines are used for long button press action when choosing for trigger delay
+    ************************************************************************************************/
+    if ((pic >= 2000) && (pic <= 2500)) {
+      if (pic == 2100) {
+        triggerDelay = 50;
+      } else if (pic == 2200) {
+          triggerDelay = 100;
+      } else if (pic == 2300) {
+          triggerDelay == 150;
+      } else if (pic == 2400) {
+          triggerDelay == 200;
+      } else if (pic == 2500) {
+          triggerDelay == 300;
+      }
+      pic = 2000;
+      menuLayer = menuLayer - 1;
+    }
+
+    /************************************************************************************************
+          Following lines are used for long button press action when choosing for trigger logic
+    ************************************************************************************************/
+    if ((pic >= 3000) && (pic <= 3200)) {
+      if (pic == 3100) {
+        triggerLogic = 1;
+      } else if (pic = 3200) {
+          triggerLogic = 0;
+      }
+      pic = 3000;
+      menuLayer = menuLayer - 1;
+    }
+    /************************************************************************************************
+          Following lines are used for long button press action when choosing between sensors.
+          Uncomment the else if cases according to the number of sensors
+    ************************************************************************************************/
+    if((pic >= 1000) && (pic < 1700)) {
+      if (pic == 1100) {
+        pic = 1110; 
+      } else if (pic == 1200) {
+          pic = 1210;
+      }/* else if (pic == 1300) {
+          pic = 1310;
+      } else if (pic == 1400) {
+          pic = 1410;
+      } else if (pic == 1500) {
+          pic = 1510;
+      } else if (pic == 1600) {
+          pic = 1610;
+      }*/
+      menuLayer = menuLayer + 1;
+    }
+      //pic = pic + 10;
+      //menuLayer = menuLayer + 1;
+  } else if (menuLayer == 3) {
+
+    /************************************************************************************************
+          Following lines are used for long button press action when choosing to configure
+          threshold or operator for a specific sensor.
+          Uncomment the else if cases according to the number of sensors
+    ************************************************************************************************/
+      if (pic == 1120) {
+        pic = 1121;
+      } else if (pic == 1220) {
+          pic = 1221;
+      } /*else if (pic == 1320) {
+          pic = 1321;
+      } else if (pic == 1420) {
+          pic = 1421;
+      } else if (pic == 1520) {
+          pic = 1521;
+      } else if (pic == 1621) {
+          pic = 1621;
+      } */
+      //pic = pic + 1;
+      menuLayer = menuLayer + 1;
+  } else if (menuLayer == 4) {
+
+    /************************************************************************************************
+          Following lines are used for long button press action when choosing
+          between the two comparison choices to the threshold.
+          Uncomment the else if cases according to the number of sensors
+    ************************************************************************************************/
+      if (pic == 1121) {
+        dummyOp[0] = -3;
+        pic = 1120;
+      } else if (pic == 1122) {
+          dummyOp[0] = -4;
+          pic = 1120;
+      } else if (pic == 1221) {
+          dummyOp[1] = -3;
+          pic = 1220;
+      } else if (pic == 1222) {
+          dummyOp[1] = -4;
+          pic = 1220;
+      } /*else if (pic == 1321) {
+          dummyOp[2] = -3;
+          pic = 1320;
+      } else if (pic == 1322) {
+          dummyOp[2] = -4;
+          pic = 1320;
+      } else if (pic == 1421) {
+          dummyOp[3] = -3;
+          pic = 1420;
+      } else if (pic == 1422) {
+          dummyOp[3] = -4;
+          pic = 1420;
+      } else if (pic == 1521) {
+          dummyOp[4] = -3;
+          pic = 1520;
+      } else if (pic == 1522) {
+          dummyOp[4] = -4;
+          pic = 1520;
+      } else if (pic == 1621) {
+          dummyOp[5] = -3;
+          pic = 1620;
+      } else if (pic == 1622) {
+          dummyOp[5] = -4;
+          pic = 1620;
+      }*/
+      menuLayer = menuLayer - 1;
+  }
 }
 
-// This function is called to detect if a long press has been stopped
-// Depending on which menu choice the user is on the function acts accordingly
-
+/***************************************************************************************
+       This function is called to detect if a long press has been stopped
+       Depending on which menu choice the user is on the function acts accordingly
+ **************************************************************************************/
 void longPressStop (void) {
   
 }
-
-// This function is called to print to the screen a header. 
-// The header is different for each system Stage
 
 /*************************************************************************
        This function is called to print to the screen a header. 
@@ -761,8 +1985,9 @@ void screenHeader (void) {
 //  display.println();
 }
 
-// This function is called to refresh what the display prints
-
+/*************************************************************************
+       This function is called to refresh what the display prints
+ *************************************************************************/
 void screenRefresh (void) {
   display.display();
   display.clearDisplay();
