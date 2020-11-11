@@ -47,7 +47,12 @@ boolean trigFail = false;
 #define MAX_SENSORS 2 
 
 // Variable that helps us change to Trigger mode. For more sensors add value 100 inside the brackets according to the number os sensors 
+// The 100 value is default for the utilization of the system. User changes values in Configuration Mode
 int dummyZero[MAX_SENSORS] = {100, 100};  
+int tmpSel[MAX_SENSORS][4] = {
+    {0,0,0,0},
+    {0,0,0,0}
+  };
 
 // Variable table that holds operator > or < for each sensor  
 // During User Config stage depending on user choice the value might change
@@ -131,6 +136,7 @@ int maxPics_L1 = 5000;
 int maxPics_L2 = 3;
 int currentPointLine;
 int menuLayer = 1; 
+byte selection = 0;
 
 // The following variables are used for the buttons and navigation in the menu
 #define CONFIRM 2 
@@ -212,6 +218,12 @@ void setup() {
   baseRadio.openReadingPipe(2,rAddresses[1]);
   baseRadio.startListening();
   baseRadio.printDetails();
+
+  //The following functions is called to calculate the tmpSel initial values
+//  for(int i = 0 ; i ++ ; i < MAX_SENSORS) {
+//    calculateTmpSel(i);  
+//  }
+  
 
   // The following lines are used for settings of timers that are needed
   initStart -> setOnTimer(&checkInitTimeout);
@@ -1425,7 +1437,14 @@ void drawConfigMenu (void) {
          supported, so only the sets of 1100 and 1200 are 
          uncommented. Make sure to change accordingly the 
          conditions in button handling for correct navigation  
- *************************************************************************/
+  *************************************************************************/
+
+  /*******************************************************************************
+         This part contains what the menu will show when choosing
+         for the corresponding operator of each sensor.
+         Further below there are commented parts that can be unommented
+         for support of more sensors. Uncomment accoring to the sensor number
+  *******************************************************************************/
   
   //    LAYER 4  //
   //    CHOICE 1.1.2.1 //
@@ -1469,7 +1488,7 @@ void drawConfigMenu (void) {
 
  /*****************************************************************************************
       Below are the choices for another 4 sensors when choosing between
-      greater or lesser comparison to the threshold value.
+      greater or lesser comparison for the operator value.
       Uncomment the according section depending on how many more sensors are needed
  *****************************************************************************************/ 
   /*
@@ -1553,7 +1572,560 @@ void drawConfigMenu (void) {
     display.print(">LESSER ( < )");
   }
   */
-  
+
+  /*******************************************************************************
+         This part contains what the menu will show when choosing
+         for the corresponding threshold of each sensor.
+         Further below there are commented parts that can be unommented
+         for support of more sensors. Uncomment accoring to the sensor number
+  *******************************************************************************/
+
+
+  //    LAYER 4  //
+  //    CHOICE 1.1.1.1 //
+  if (pic == 1111) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[0][0]);
+    display.print(tmpSel[0][1]);
+    display.print(tmpSel[0][2]);
+    display.print(tmpSel[0][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.1.1.2 //
+  if (pic == 1112) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[0][0]);
+    display.print(tmpSel[0][1]);
+    display.print(tmpSel[0][2]);
+    display.print(tmpSel[0][3]);
+    startingPointRow = 6;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.1.1.3 //
+  if (pic == 1113) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[0][0]);
+    display.print(tmpSel[0][1]);
+    display.print(tmpSel[0][2]);
+    display.print(tmpSel[0][3]);
+    startingPointRow = 12;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.1.1.4 //
+  if (pic == 1114) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[0][0]);
+    display.print(tmpSel[0][1]);
+    display.print(tmpSel[0][2]);
+    display.print(tmpSel[0][3]);
+    startingPointRow = 18;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.1.1.5 //
+  if (pic == 1115) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[0][0]);
+    display.print(tmpSel[0][1]);
+    display.print(tmpSel[0][2]);
+    display.print(tmpSel[0][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(">CONFIRM THRESH");
+  }
+
+ //    LAYER 4  //
+  //    CHOICE 1.2.1.1 //
+  if (pic == 1211) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[1][0]);
+    display.print(tmpSel[1][1]);
+    display.print(tmpSel[1][2]);
+    display.print(tmpSel[1][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.2.1.2 //
+  if (pic == 1212) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[1][0]);
+    display.print(tmpSel[1][1]);
+    display.print(tmpSel[1][2]);
+    display.print(tmpSel[1][3]);
+    startingPointRow = 6;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.2.1.3 //
+  if (pic == 1213) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[1][0]);
+    display.print(tmpSel[1][1]);
+    display.print(tmpSel[1][2]);
+    display.print(tmpSel[1][3]);
+    startingPointRow = 12;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.2.1.4 //
+  if (pic == 1214) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[1][0]);
+    display.print(tmpSel[1][1]);
+    display.print(tmpSel[1][2]);
+    display.print(tmpSel[1][3]);
+    startingPointRow = 18;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.2.1.5 //
+  if (pic == 1215) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[1][0]);
+    display.print(tmpSel[1][1]);
+    display.print(tmpSel[1][2]);
+    display.print(tmpSel[1][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(">CONFIRM THRESH");
+  }
+
+/*****************************************************************************************
+      Below are the choices for another 4 sensors when choosing the threshold value.
+      Uncomment the according section depending on how many more sensors are needed
+ *****************************************************************************************/   
+  /*
+  //    LAYER 4  //
+  //    CHOICE 1.3.1.1 //
+  if (pic == 1311) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[2][0]);
+    display.print(tmpSel[2][1]);
+    display.print(tmpSel[2][2]);
+    display.print(tmpSel[2][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.3.1.2 //
+  if (pic == 1312) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[2][0]);
+    display.print(tmpSel[2][1]);
+    display.print(tmpSel[2][2]);
+    display.print(tmpSel[2][3]);
+    startingPointRow = 6;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.3.1.3 //
+  if (pic == 1313) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[2][0]);
+    display.print(tmpSel[2][1]);
+    display.print(tmpSel[2][2]);
+    display.print(tmpSel[2][3]);
+    startingPointRow = 12;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.3.1.4 //
+  if (pic == 1314) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[2][0]);
+    display.print(tmpSel[2][1]);
+    display.print(tmpSel[2][2]);
+    display.print(tmpSel[2][3]);
+    startingPointRow = 18;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.3.1.5 //
+  if (pic == 1315) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[2][0]);
+    display.print(tmpSel[2][1]);
+    display.print(tmpSel[2][2]);
+    display.print(tmpSel[2][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(">CONFIRM THRESH");
+  }
+
+ //    LAYER 4  //
+  //    CHOICE 1.4.1.1 //
+  if (pic == 1411) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[3][0]);
+    display.print(tmpSel[3][1]);
+    display.print(tmpSel[3][2]);
+    display.print(tmpSel[3][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.4.1.2 //
+  if (pic == 1412) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[3][0]);
+    display.print(tmpSel[3][1]);
+    display.print(tmpSel[3][2]);
+    display.print(tmpSel[3][3]);
+    startingPointRow = 6;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.4.1.3 //
+  if (pic == 1413) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[3][0]);
+    display.print(tmpSel[3][1]);
+    display.print(tmpSel[3][2]);
+    display.print(tmpSel[3][3]);
+    startingPointRow = 12;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.4.1.4 //
+  if (pic == 1414) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[3][0]);
+    display.print(tmpSel[3][1]);
+    display.print(tmpSel[3][2]);
+    display.print(tmpSel[3][3]);
+    startingPointRow = 18;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.4.1.5 //
+  if (pic == 1415) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[3][0]);
+    display.print(tmpSel[3][1]);
+    display.print(tmpSel[3][2]);
+    display.print(tmpSel[3][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(">CONFIRM THRESH");
+  }
+
+ //    LAYER 4  //
+  //    CHOICE 1.5.1.1 //
+  if (pic == 1511) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[4][0]);
+    display.print(tmpSel[4][1]);
+    display.print(tmpSel[4][2]);
+    display.print(tmpSel[4][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.5.1.2 //
+  if (pic == 1512) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[4][0]);
+    display.print(tmpSel[4][1]);
+    display.print(tmpSel[4][2]);
+    display.print(tmpSel[4][3]);
+    startingPointRow = 6;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.5.1.3 //
+  if (pic == 1513) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[4][0]);
+    display.print(tmpSel[4][1]);
+    display.print(tmpSel[4][2]);
+    display.print(tmpSel[4][3]);
+    startingPointRow = 12;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.5.1.4 //
+  if (pic == 1514) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[4][0]);
+    display.print(tmpSel[4][1]);
+    display.print(tmpSel[4][2]);
+    display.print(tmpSel[4][3]);
+    startingPointRow = 18;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.5.1.5 //
+  if (pic == 1515) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[4][0]);
+    display.print(tmpSel[4][1]);
+    display.print(tmpSel[4][2]);
+    display.print(tmpSel[4][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(">CONFIRM THRESH");
+  }
+
+ //    LAYER 4  //
+  //    CHOICE 1.6.1.1 //
+  if (pic == 1611) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[5][0]);
+    display.print(tmpSel[5][1]);
+    display.print(tmpSel[5][2]);
+    display.print(tmpSel[5][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.6.1.2 //
+  if (pic == 1612) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[5][0]);
+    display.print(tmpSel[5][1]);
+    display.print(tmpSel[5][2]);
+    display.print(tmpSel[5][3]);
+    startingPointRow = 6;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.6.1.3 //
+  if (pic == 1613) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[5][0]);
+    display.print(tmpSel[5][1]);
+    display.print(tmpSel[5][2]);
+    display.print(tmpSel[5][3]);
+    startingPointRow = 12;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.6.1.4 //
+  if (pic == 1614) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[5][0]);
+    display.print(tmpSel[5][1]);
+    display.print(tmpSel[5][2]);
+    display.print(tmpSel[5][3]);
+    startingPointRow = 18;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(" CONFIRM THRESH");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.6.1.5 //
+  if (pic == 1615) {
+    int startingPointRow = 0;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[5][0]);
+    display.print(tmpSel[5][1]);
+    display.print(tmpSel[5][2]);
+    display.print(tmpSel[5][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(">CONFIRM THRESH");
+  }
+  */
   screenRefresh(); 
 }
 
@@ -1705,6 +2277,37 @@ void click (void) {
     } else if (pic == 1622) {
         pic = 1621;
     } */
+
+    /********************************************************************************
+          The following lines are used to detemine the single click action when
+          the user has chosen to select a threshold. To support more sensors
+          uncomment the according if statements 
+     *******************************************************************************/
+      else if ((pic >= 1110) && (pic < 1115)) {
+        pic = pic + 1;
+    } else if ((pic >= 1115) && (pic < 1120)) {
+        pic = 1111;
+    } else if ((pic >= 1210) && (pic < 1215)) {
+        pic = pic + 1;
+    } else if ((pic >= 1215) && (pic < 1220)) {
+        pic = 1211;
+    }/* else if ((pic >= 1310) && (pic < 1315)) {
+        pic = pic + 1;
+    } else if ((pic >= 1315) && (pic < 1320)) {
+        pic = 1311;
+    } else if ((pic >= 1410) && (pic < 1415)) {
+        pic = pic + 1;
+    } else if ((pic >= 1415) && (pic < 1420)) {
+        pic = 1411;
+    } else if ((pic >= 1510) && (pic < 1515)) {
+        pic = pic + 1;
+    } else if ((pic >= 1515) && (pic < 1520)) {
+        pic = 1511;
+    } else if ((pic >= 1610) && (pic < 1615)) {
+        pic = pic + 1;
+    } else if ((pic >= 1615) && (pic < 1620)) {
+        pic = 1611;
+    }*/
   }
   
 }
@@ -1773,6 +2376,22 @@ void doubleClick (void) {
       } else if ((pic == 1621) || (pic == 1622)) {
           pic = 1620;
       } */
+
+        else if ((pic >= 1110) && (pic < 1120)) {
+          pic = 1110;
+      } else if ((pic >= 1210) && (pic < 1220)) {
+          pic = 1210;
+      }/* else if ((pic >= 1310) && (pic < 1320)) {
+          pic = 1310;
+      } else if ((pic >= 1410) && (pic < 1420)) {
+          pic = 1410;
+      } else if ((pic >= 1510) && (pic < 1520)) {
+          pic = 1510;
+      } else if ((pic >= 1610) && (pic < 1620)) {
+          pic = 1610;
+      }*/
+
+      
       menuLayer = menuLayer - 1;
   }
 }
@@ -1849,11 +2468,11 @@ void longPressStart (void) {
           threshold or operator for a specific sensor.
           Uncomment the else if cases according to the number of sensors
     ************************************************************************************************/
-      if (pic == 1120) {
+      /*if (pic == 1120) {
         pic = 1121;
       } else if (pic == 1220) {
           pic = 1221;
-      } /*else if (pic == 1320) {
+      } */ /*else if (pic == 1320) {
           pic = 1321;
       } else if (pic == 1420) {
           pic = 1421;
@@ -1862,6 +2481,11 @@ void longPressStart (void) {
       } else if (pic == 1621) {
           pic = 1621;
       } */
+      if ((pic == 1120) || (pic == 1220) || (pic == 1320) || (pic == 1420) || (pic == 1520) || (pic == 1620)) {
+          pic = pic + 1;
+      } else if ((pic == 1110) || (pic == 1210) || (pic == 1310) || (pic == 1410) || (pic == 1510) || (pic == 1610)) {
+           pic = pic + 1;
+      }
       //pic = pic + 1;
       menuLayer = menuLayer + 1;
   } else if (menuLayer == 4) {
@@ -1993,3 +2617,15 @@ void screenRefresh (void) {
   display.clearDisplay();
   //display.clear();
 }
+
+/*************************************************************************
+       This function is helps us know the value of each digit 
+       of a sensor temporary threshold.
+ *************************************************************************/
+/*void calculateTmpSel (int node) {
+  tmpSel[node][0] = 0;
+  tmpSel[node][1] = (dummyZero[node] / 100);
+  tmpSel[node][2] = (dummyZero[node] / 10) % 10;
+  tmpSel[node][3] = dummyZero[node] % 10;
+  
+}*/
