@@ -12,7 +12,8 @@
  *                                                                       *
         Author: S. Kordas
  *                                                                       *
-          Last modified: 21/03/2019
+          First Created: 21/03/2019
+          Last Modified: 11/11/2020
  *                                                                       *
  *************************************************************************/
 
@@ -175,8 +176,8 @@ void setup() {
   button.attachDoubleClick(doubleClick);
   button.attachLongPressStop(longPressStop);
   button.attachLongPressStart(longPressStart);
-  button.setDebounceTicks(100);
-  button.setClickTicks(600);
+  //button.setDebounceTicks(100);
+  //button.setClickTicks(600);
 
   // The following lines are used for the setup of the screen 
   
@@ -674,7 +675,7 @@ void drawInitMenu (void) {
      display.print("Sensors : ");
      display.setCursor(60, 25);
      display.print(sensorCtr);
-     //screenRefresh();
+     //screenRefressh();
    } else if(initTimeout && (sensorCtr == 0)) {
        display.println();
        display.setCursor(0,startingPointRow);
@@ -706,26 +707,35 @@ void drawConfigMenu (void) {
     //button.tick();
     //screenHeader();
     if(currentPointLine <= 20) {
-      display.setCursor(0, currentPointLine);  display.print (">SET THRESHOLD");
+      display.setCursor(0, currentPointLine);  
+      display.print (">SET THRESHOLD");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER DELAY");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER LOGIC");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" HELP");
+      display.setCursor(0, currentPointLine);  
+      display.print ("HELP");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" CONFIRM");
+      display.setCursor(0, currentPointLine);  
+      display.print ("CONFIRM");
     //screenRefresh();
     }
 
     else if(currentPointLine > 20) {
-      display.setCursor(0, currentPointLine);  display.print (">SET THRESHOLD");
+      display.setCursor(0, currentPointLine);  
+      display.print (">SET THRESHOLD");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER DELAY");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER LOGIC");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" HELP");
+      display.setCursor(0, currentPointLine);  
+      display.print ("HELP");
     }
   }
 
@@ -734,26 +744,35 @@ void drawConfigMenu (void) {
   if (pic == 2000) {
     //button.tick();
     if(currentPointLine <= 20) {
-      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      display.setCursor(0, currentPointLine);  
+      display.print ("SET THRESHOLD");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (">TRIGGER DELAY");
+      display.setCursor(0, currentPointLine);  
+      display.print (">TRIGGER DELAY");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER LOGIC");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" HELP");
+      display.setCursor(0, currentPointLine);  
+      display.print ("HELP");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" CONFIRM");
+      display.setCursor(0, currentPointLine);  
+      display.print ("CONFIRM");
     //screenRefresh();
     }
 
     else if(currentPointLine > 20) {
-      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      display.setCursor(0, currentPointLine);  
+      display.print ("SET THRESHOLD");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (">TRIGGER DELAY");
+      display.setCursor(0, currentPointLine);  
+      display.print (">TRIGGER DELAY");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER LOGIC");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" HELP");
+      display.setCursor(0, currentPointLine);  
+      display.print ("HELP");
     }
   }
 
@@ -762,26 +781,35 @@ void drawConfigMenu (void) {
   if (pic == 3000) {
     //button.tick();
     if(currentPointLine <= 20) {
-      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      display.setCursor(0, currentPointLine);  
+      display.print ("SET THRESHOLD");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER DELAY");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (">TRIGGER LOGIC");
+      display.setCursor(0, currentPointLine);  
+      display.print (">TRIGGER LOGIC");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" HELP");
+      display.setCursor(0, currentPointLine);  
+      display.print ("HELP");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" CONFIRM");
+      display.setCursor(0, currentPointLine);  
+      display.print ("CONFIRM");
     //screenRefresh();
     }
 
     else if(currentPointLine > 20) {
-      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      display.setCursor(0, currentPointLine);  
+      display.print ("SET THRESHOLD");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER DELAY");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (">TRIGGER LOGIC");
+      display.setCursor(0, currentPointLine); 
+      display.print (">TRIGGER LOGIC");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" HELP");
+      display.setCursor(0, currentPointLine);  
+      display.print ("HELP");
     }
   }
 
@@ -790,26 +818,35 @@ void drawConfigMenu (void) {
   if (pic == 4000) {
     //button.tick();
     if(currentPointLine <= 20) {
-      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      display.setCursor(0, currentPointLine);  
+      display.print ("SET THRESHOLD");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER DELAY");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER LOGIC");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (">HELP");
+      display.setCursor(0, currentPointLine);  
+      display.print (">HELP");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" CONFIRM");
+      display.setCursor(0, currentPointLine);  
+      display.print ("CONFIRM");
     //screenRefresh();
     }
 
     else if(currentPointLine > 20) {
-      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      display.setCursor(0, currentPointLine);  
+      display.print ("SET THRESHOLD");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER DELAY");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER LOGIC");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (">HELP");
+      display.setCursor(0, currentPointLine);  
+      display.print (">HELP");
     }
   }  
 
@@ -818,20 +855,26 @@ void drawConfigMenu (void) {
   if (pic == 5000) {
     //button.tick();
     if(currentPointLine <= 20) {
-      display.setCursor(0, currentPointLine);  display.print (" SET THRESHOLD");
+      display.setCursor(0, currentPointLine);  
+      display.print ("SET THRESHOLD");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER DELAY");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" TRIGGER LOGIC");
+      display.setCursor(0, currentPointLine);  
+      display.print ("TRIGGER LOGIC");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" HELP");
+      display.setCursor(0, currentPointLine);  
+      display.print ("HELP");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (">CONFIRM");
+      display.setCursor(0, currentPointLine);  
+      display.print (">CONFIRM");
     //screenRefresh();
     }
 
     else if(currentPointLine > 20) {
-      display.setCursor(0, currentPointLine);  display.print (">CONFRIM");
+      display.setCursor(0, currentPointLine);  
+      display.print (">CONFRIM");
 //      currentPointLine = currentPointLine + 8;
 //      display.setCursor(0, currentPointLine);  display.print (" TRIGGER DELAY");
 //      currentPointLine = currentPointLine + 8;
@@ -863,19 +906,19 @@ void drawConfigMenu (void) {
         if (sensorRCInit[node] == 1) {
           display.print (">SENSOR 0");
         } else {
-          display.print (" N/A");
+          display.print ("N/A");
         }
         currentPointLine = currentPointLine + 8;
       } else {
           if (sensorRCInit[node] == 1) {
-            display.print (" SENSOR ");
+            display.print ("SENSOR ");
             display.setCursor(50 , currentPointLine);
             display.print (node);
           } else {
-              //display.print (" SENSOR ");
+              //display.print ("SENSOR ");
               display.setCursor(0 , currentPointLine);
               //display.print (node);
-              display.print (" N/A");           
+              display.print ("N/A");           
           }
           currentPointLine = currentPointLine + 8;
       }
@@ -895,19 +938,19 @@ void drawConfigMenu (void) {
         if (sensorRCInit[node] == 1) {
           display.print (">SENSOR 1");
         } else {
-          display.print (" N/A");
+          display.print ("N/A");
         }
         currentPointLine = currentPointLine + 8;
       } else {
           if (sensorRCInit[node] == 1) {
-            display.print (" SENSOR ");
+            display.print ("SENSOR ");
             display.setCursor(50 , currentPointLine);
             display.print (node);
           } else {
-              //display.print (" SENSOR ");
+              //display.print ("SENSOR ");
               display.setCursor(0 , currentPointLine);
               //display.print (node);
-              display.print (" N/A");           
+              display.print ("N/A");           
           }
           currentPointLine = currentPointLine + 8;
       }
@@ -925,19 +968,19 @@ void drawConfigMenu (void) {
 //        if (sensorRCInit[node] == 1) {
 //          display.print (">SENSOR 2");
 //        } else {
-//          display.print (" N/A");
+//          display.print ("N/A");
 //        }
 //        currentPointLine = currentPointLine + 8;
 //      } else {
 //          if (sensorRCInit[node] == 1) {
-//            display.print (" SENSOR ");
+//            display.print ("SENSOR ");
 //            display.setCursor(25 , currentPointLine);
 //            display.print (node);
 //          } else {
-//              //display.print (" SENSOR ");
+//              //display.print ("SENSOR ");
 //              display.setCursor(0 , currentPointLine);
 //              //display.print (node);
-//              display.print (" N/A");           
+//              display.print ("N/A");           
 //          }
 //          currentPointLine = currentPointLine + 8;
 //      }
@@ -953,19 +996,19 @@ void drawConfigMenu (void) {
 //        if (sensorRCInit[node] == 1) {
 //          display.print (">SENSOR 3");
 //        } else {
-//          display.print (" N/A");
+//          display.print ("N/A");
 //        }
 //        currentPointLine = currentPointLine + 8;
 //      } else {
 //          if (sensorRCInit[node] == 1) {
-//            display.print (" SENSOR ");
+//            display.print ("SENSOR ");
 //            display.setCursor(25 , currentPointLine);
 //            display.print (node);
 //          } else {
-//              //display.print (" SENSOR ");
+//              //display.print ("SENSOR ");
 //              display.setCursor(0 , currentPointLine);
 //              //display.print (node);
-//              display.print (" N/A");           
+//              display.print ("N/A");           
 //          }
 //          currentPointLine = currentPointLine + 8;
 //      }
@@ -981,18 +1024,18 @@ void drawConfigMenu (void) {
 //      if (sensorRCInit[4] == 1) {
 //        display.print (">SENSOR 4");
 //      } else {
-//        display.print (" N/A");
+//        display.print ("N/A");
 //      }
 //      currentPointLine = currentPointLine + 8;
 //      display.setCursor(0, currentPointLine);
 //      if (sensorRCInit[5] == 1) {
-//        display.print (" SENSOR 5");
+//        display.print ("SENSOR 5");
 //      } else {
-//          display.print (" N/A");
+//          display.print ("N/A");
 //      }
 ////      currentPointLine = currentPointLine + 8;
 ////      display.setCursor(0, currentPointLine);
-////      display.print (" BACK");
+////      display.print ("BACK");
 //    } else {
 //       for (byte node = 0 ; node < MAX_SENSORS ; node++) {
 //         display.setCursor(0, currentPointLine);
@@ -1000,18 +1043,18 @@ void drawConfigMenu (void) {
 //           if (sensorRCInit[node] == 1) {
 //             display.print (">SENSOR 4");
 //           } else {
-//               display.print (" N/A");
+//               display.print ("N/A");
 //           }
 //         } else {
 //             if (sensorRCInit[node] == 1) {
-//               display.print (" SENSOR ");
+//               display.print ("SENSOR ");
 //               display.setCursor(25 , currentPointLine);
 //               display.print (node);
 //             } else {
-//                 //display.print (" SENSOR ");
+//                 //display.print ("SENSOR ");
 //                 display.setCursor(0 , currentPointLine);
 //                 //display.print (node);
-//                 display.print (" N/A");           
+//                 display.print ("N/A");           
 //             }             
 //         }
 //       }
@@ -1024,29 +1067,29 @@ void drawConfigMenu (void) {
 //    display.setCursor(0, currentPointLine);
 //    if (sensorCtr >= 4) {
 //      if (sensorRCInit[4] == 1) {
-//        display.print (" SENSOR 4");
+//        display.print ("SENSOR 4");
 //      } else {
-//        display.print (" N/A");
+//        display.print ("N/A");
 //      }
 //      currentPointLine = currentPointLine + 8;
 //      display.setCursor(0, currentPointLine);
 //      if (sensorRCInit[5] == 1) {
 //        display.print (">SENSOR 5");
 //      } else {
-//          display.print (" N/A");
+//          display.print ("N/A");
 //      }
 ////      currentPointLine = currentPointLine + 8;
 ////      display.setCursor(0, currentPointLine);
-////      display.print (" BACK");      
+////      display.print ("BACK");      
 //    } else {
 //        if (sensorRCInit[5] == 1) {
 //          display.print (">SENSOR 5");
 //        } else {
-//            display.print (" N/A");
+//            display.print ("N/A");
 //        }
 ////        currentPointLine = currentPointLine + 8;
 ////        display.setCursor(0, currentPointLine);
-////        display.print (" BACK");            
+////        display.print ("BACK");            
 //    }
 //  }
 
@@ -1054,23 +1097,32 @@ void drawConfigMenu (void) {
   //    CHOICE 2.1 //  
   if (pic == 2100) {
     if(currentPointLine <= 20) {
-      display.setCursor(0, currentPointLine);  display.print (">50 ms");
+      display.setCursor(0, currentPointLine);  
+      display.print (">50 ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 100ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("100ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 150ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("150ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 200ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("200ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 300ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("300ms");
     } else if(currentPointLine > 20) {
-        display.setCursor(0, currentPointLine);  display.print (">50 ms");
+        display.setCursor(0, currentPointLine);  
+        display.print (">50 ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (" 100ms");
+        display.setCursor(0, currentPointLine);  
+        display.print ("100ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (" 150ms");
+        display.setCursor(0, currentPointLine);  
+        display.print ("150ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (" 200ms");
+        display.setCursor(0, currentPointLine);  
+        display.print ("200ms");
         //currentPointLine = currentPointLine + 8;
         //display.setCursor(0, currentPointLine);  display.print (" 300ms");
     }
@@ -1081,23 +1133,32 @@ void drawConfigMenu (void) {
   //    CHOICE 2.2 //  
   if (pic == 2200) {
     if(currentPointLine <= 20) {
-      display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("50 ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (">100ms");
+      display.setCursor(0, currentPointLine);  
+      display.print (">100ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 150ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("150ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 200ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("200ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 300ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("300ms");
     } else if(currentPointLine > 20) {
-        display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+        display.setCursor(0, currentPointLine);  
+        display.print ("50 ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (">100ms");
+        display.setCursor(0, currentPointLine);  
+        display.print (">100ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (" 150ms");
+        display.setCursor(0, currentPointLine);  
+        display.print ("150ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (" 200ms");
+        display.setCursor(0, currentPointLine);  
+        display.print ("200ms");
         //currentPointLine = currentPointLine + 8;
         //display.setCursor(0, currentPointLine);  display.print (" 300ms");
     }
@@ -1107,23 +1168,32 @@ void drawConfigMenu (void) {
   //    CHOICE 2.3 //  
   if (pic == 2300) {
     if(currentPointLine <= 20) {
-      display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("50 ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 100ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("100ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (">150ms");
+      display.setCursor(0, currentPointLine);  
+      display.print (">150ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 200ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("200ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 300ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("300ms");
     } else if(currentPointLine > 20) {
-        display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+        display.setCursor(0, currentPointLine);  
+        display.print ("50 ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (" 100ms");
+        display.setCursor(0, currentPointLine); 
+        display.print ("100ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (">150ms");
+        display.setCursor(0, currentPointLine);  
+        display.print (">150ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (" 200ms");
+        display.setCursor(0, currentPointLine);  
+        display.print ("200ms");
         //currentPointLine = currentPointLine + 8;
         //display.setCursor(0, currentPointLine);  display.print (" 300ms");
     }
@@ -1134,23 +1204,32 @@ void drawConfigMenu (void) {
   //    CHOICE 2.4 //  
   if (pic == 2400) {
     if(currentPointLine <= 20) {
-      display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("50 ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 100ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("100ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 150ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("150ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (">200ms");
+      display.setCursor(0, currentPointLine);  
+      display.print (">200ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 300ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("300ms");
     } else if(currentPointLine > 20) {
-        display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+        display.setCursor(0, currentPointLine);  
+        display.print ("50 ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (" 100ms");
+        display.setCursor(0, currentPointLine);  
+        display.print ("100ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (" 150ms");
+        display.setCursor(0, currentPointLine);  
+        display.print ("150ms");
         currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (">200ms");
+        display.setCursor(0, currentPointLine);  
+        display.print (">200ms");
         //currentPointLine = currentPointLine + 8;
         //display.setCursor(0, currentPointLine);  display.print (" 300ms");
     }
@@ -1161,25 +1240,31 @@ void drawConfigMenu (void) {
   //    CHOICE 2.5 //  
   if (pic == 2500) {
     if(currentPointLine <= 20) {
-      display.setCursor(0, currentPointLine);  display.print (" 50 ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("50 ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 100ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("100ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 150ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("150ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (" 200ms");
+      display.setCursor(0, currentPointLine);  
+      display.print ("200ms");
       currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);  display.print (">300ms");
+      display.setCursor(0, currentPointLine);  
+      display.print (">300ms");
     } else if(currentPointLine > 20) {
-        //display.setCursor(0, currentPointLine);  display.print (">50 ms");
+        //display.setCursor(0, currentPointLine);  display.print ("50 ms");
         //currentPointLine = currentPointLine + 8;
-        //display.setCursor(0, currentPointLine);  display.print (" 100ms");
+        //display.setCursor(0, currentPointLine);  display.print ("100ms");
         //currentPointLine = currentPointLine + 8;
-        //display.setCursor(0, currentPointLine);  display.print (" 150ms");
+        //display.setCursor(0, currentPointLine);  display.print ("150ms");
         //currentPointLine = currentPointLine + 8;
-        //display.setCursor(0, currentPointLine);  display.print (" 200ms");
+        //display.setCursor(0, currentPointLine);  display.print ("200ms");
         //currentPointLine = currentPointLine + 8;
-        display.setCursor(0, currentPointLine);  display.print (">300ms");
+        display.setCursor(0, currentPointLine);  
+        display.print (">300ms");
     }
 
   }
@@ -1187,17 +1272,23 @@ void drawConfigMenu (void) {
   //    LAYER 2  //
   //    CHOICE 3.1 //  
   if (pic == 3100) {
-    display.setCursor(0, currentPointLine);  display.print (">OR");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);  display.print (" AND");
+    display.setTextSize(3);
+    display.setCursor(0, currentPointLine);  
+    display.println (">OR");
+    //currentPointLine = currentPointLine + 8;
+    //display.setCursor(0, currentPointLine);  
+    display.println ("AND");
   }
 
   //    LAYER 2  //
   //    CHOICE 3.2 //  
   if (pic == 3200) {
-    display.setCursor(0, currentPointLine);  display.print (" OR");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);  display.print (">AND");
+    display.setTextSize(3);
+    display.setCursor(0, currentPointLine);  
+    display.println ("OR");
+    //currentPointLine = currentPointLine + 8;
+    //display.setCursor(0, currentPointLine);  
+    display.println (">AND");
   }
 
   //    LAYER 2  //
@@ -1240,11 +1331,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.1.1 //
   if (pic == 1110) {
     if (sensorRCInit[0] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (">THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(" OPERATOR");
+      display.print (">THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[0]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println("OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1256,11 +1354,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.1.2 //
   if (pic == 1120) {
     if (sensorRCInit[0] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (" THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(">OPERATOR");
+      display.print ("THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[0]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println(">OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1271,11 +1376,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.2.1 //
   if (pic == 1210) {
     if (sensorRCInit[1] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (">THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(" OPERATOR");
+      display.print (">THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[1]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println("OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1287,11 +1399,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.2.2 //
   if (pic == 1220) {
     if (sensorRCInit[1] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (" THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(">OPERATOR");
+      display.print ("THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[1]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println(">OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1309,11 +1428,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.3.1 //
   if (pic == 1310) {
     if (sensorRCInit[2] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (">THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(" OPERATOR");
+      display.print (">THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[2]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println("OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1325,11 +1451,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.3.2 //
   if (pic == 1320) {
     if (sensorRCInit[2] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (" THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(">OPERATOR");
+      display.print ("THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[2]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println(">OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1340,11 +1473,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.4.1 //
   if (pic == 1410) {
     if (sensorRCInit[3] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (">THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(" OPERATOR");
+      display.print (">THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[3]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println("OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1356,11 +1496,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.4.2 //
   if (pic == 1420) {
     if (sensorRCInit[3] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (" THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(">OPERATOR");
+      display.print ("THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[3]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println(">OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1371,11 +1518,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.5.1 //
   if (pic == 1510) {
     if (sensorRCInit[4] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (">THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(" OPERATOR");
+      display.print (">THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[4]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println("OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1387,11 +1541,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.5.2 //
   if (pic == 1520) {
     if (sensorRCInit[4] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (" THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(">OPERATOR");
+      display.print ("THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[4]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println(">OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1402,11 +1563,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.6.1 //
   if (pic == 1610) {
     if (sensorRCInit[5] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (">THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(" OPERATOR");
+      display.print (">THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[5]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println("OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1418,11 +1586,18 @@ void drawConfigMenu (void) {
   //    CHOICE 1.6.2 //
   if (pic == 1620) {
     if (sensorRCInit[5] == 1) {
+      display.setTextSize(2);
       display.setCursor(0, currentPointLine);
-      display.print (" THRESHOLD VALUE");
-      currentPointLine = currentPointLine + 8;
-      display.setCursor(0, currentPointLine);
-      display.print(">OPERATOR");
+      display.print ("THRESH:"); 
+      display.setTextSize(1);
+      currentPointLine = currentPointLine + 3;
+      display.setCursor(100,currentPointLine);
+      display.print(dummyZero[5]);
+      display.setTextSize(2);
+      display.println();
+      //currentPointLine = currentPointLine + 8;
+      //display.setCursor(0, currentPointLine);
+      display.println(">OPERATOR");
     } else {
         display.setCursor(0, currentPointLine);
         display.print("INVALID.GO BACk");
@@ -1449,41 +1624,97 @@ void drawConfigMenu (void) {
   //    LAYER 4  //
   //    CHOICE 1.1.2.1 //
   if (pic == 1121) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (">GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(" LESSER ( < )");
+    display.print (">GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print("LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
 
    //    LAYER 4  //
   //    CHOICE 1.1.2.2 //
   if (pic == 1122) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (" GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(">LESSER ( < )");
+    display.print ("GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print(">LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
 
   //    LAYER 4  //
   //    CHOICE 1.2.2.1 //
   if (pic == 1221) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (">GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(" LESSER ( < )");
+    display.print (">GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print("LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
 
   //    LAYER 4  //
   //    CHOICE 1.2.2.2 //
   if (pic == 1222) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (" GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(">LESSER ( < )");
+    display.print ("GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print(">LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
 
  /*****************************************************************************************
@@ -1495,81 +1726,193 @@ void drawConfigMenu (void) {
   //    LAYER 4  //
   //    CHOICE 1.3.2.1 //
   if (pic == 1321) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (">GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(" LESSER ( < )");
+    display.print (">GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print("LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
 
   //    LAYER 4  //
   //    CHOICE 1.3.2.2 //
   if (pic == 1322) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (" GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(">LESSER ( < )");
+    display.print ("GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print(">LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
 
   //    LAYER 4  //
   //    CHOICE 1.4.2.1 //
   if (pic == 1421) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (">GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(" LESSER ( < )");
+    display.print (">GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print("LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
 
   //    LAYER 4  //
   //    CHOICE 1.4.2.2 //
   if (pic == 1422) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (" GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(">LESSER ( < )");
+    display.print ("GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print(">LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
 
     //    LAYER 4  //
   //    CHOICE 1.5.2.1 //
   if (pic == 1521) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (">GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(" LESSER ( < )");
+    display.print (">GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print("LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
 
   //    LAYER 4  //
   //    CHOICE 1.5.2.2 //
   if (pic == 1522) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (" GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(">LESSER ( < )");
+    display.print ("GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print(">LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
 
     //    LAYER 4  //
   //    CHOICE 1.6.2.1 //
   if (pic == 1621) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (">GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(" LESSER ( < )");
+    display.print (">GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print("LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
 
   //    LAYER 4  //
   //    CHOICE 1.6.2.2 //
   if (pic == 1622) {
+    display.setTextSize(2);
     display.setCursor(0, currentPointLine);
-    display.print (" GREATER ( > )");
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(0, currentPointLine);
-    display.print(">LESSER ( < )");
+    display.print ("GREATER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 4;
+    display.setCursor(110, currentPointLine);
+    display.print(">");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
+    //display.setCursor(0, currentPointLine);
+    display.print(">LESSER:");
+    display.setTextSize(1);
+    currentPointLine = currentPointLine + 19;
+    display.setCursor(110, currentPointLine);
+    display.print("<");
+    //currentPointLine = currentPointLine + 8;
+    display.setTextSize(2);
+    display.println();
   }
   */
 
@@ -1584,6 +1927,7 @@ void drawConfigMenu (void) {
   //    LAYER 4  //
   //    CHOICE 1.1.1.1 //
   if (pic == 1111) {
+    display.setTextSize(2);
     int startingPointRow = 0;
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[0][0]);
@@ -1591,74 +1935,79 @@ void drawConfigMenu (void) {
     display.print(tmpSel[0][2]);
     display.print(tmpSel[0][3]);
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
-    currentPointLine = currentPointLine + 4;
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.1.1.2 //
   if (pic == 1112) {
+    display.setTextSize(2);
     int startingPointRow = 0;
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[0][0]);
     display.print(tmpSel[0][1]);
     display.print(tmpSel[0][2]);
     display.print(tmpSel[0][3]);
-    startingPointRow = 6;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 12;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.1.1.3 //
   if (pic == 1113) {
+    display.setTextSize(2);
     int startingPointRow = 0;
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[0][0]);
     display.print(tmpSel[0][1]);
     display.print(tmpSel[0][2]);
     display.print(tmpSel[0][3]);
-    startingPointRow = 12;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 24;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.1.1.4 //
   if (pic == 1114) {
+    display.setTextSize(2);
     int startingPointRow = 0;
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[0][0]);
     display.print(tmpSel[0][1]);
     display.print(tmpSel[0][2]);
     display.print(tmpSel[0][3]);
-    startingPointRow = 18;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 36;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.1.1.5 //
   if (pic == 1115) {
+    display.setTextSize(2);
     int startingPointRow = 0;
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[0][0]);
@@ -1666,89 +2015,95 @@ void drawConfigMenu (void) {
     display.print(tmpSel[0][2]);
     display.print(tmpSel[0][3]);
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(">CONFIRM THRESH");
+    display.print(">CONFIRM");
   }
 
  //    LAYER 4  //
   //    CHOICE 1.2.1.1 //
   if (pic == 1211) {
+    display.setTextSize(2);
     int startingPointRow = 0;
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[1][0]);
     display.print(tmpSel[1][1]);
     display.print(tmpSel[1][2]);
-    display.print(tmpSel[1][3]);
+    display.println(tmpSel[1][3]);
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 16;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
     startingPointRow = 0;
     currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print("^");
-    currentPointLine = currentPointLine + 4;
-    display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.2.1.2 //
   if (pic == 1212) {
+    display.setTextSize(2);
     int startingPointRow = 0;
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[1][0]);
     display.print(tmpSel[1][1]);
     display.print(tmpSel[1][2]);
-    display.print(tmpSel[1][3]);
-    startingPointRow = 6;
-    currentPointLine = currentPointLine + 8;
+    display.println(tmpSel[1][3]);
+    startingPointRow = 12;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.2.1.3 //
   if (pic == 1213) {
+    display.setTextSize(2);
     int startingPointRow = 0;
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[1][0]);
     display.print(tmpSel[1][1]);
     display.print(tmpSel[1][2]);
-    display.print(tmpSel[1][3]);
-    startingPointRow = 12;
-    currentPointLine = currentPointLine + 8;
+    display.println(tmpSel[1][3]);
+    startingPointRow = 24;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.2.1.4 //
   if (pic == 1214) {
+    display.setTextSize(2);
     int startingPointRow = 0;
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[1][0]);
     display.print(tmpSel[1][1]);
     display.print(tmpSel[1][2]);
-    display.print(tmpSel[1][3]);
-    startingPointRow = 18;
-    currentPointLine = currentPointLine + 8;
+    display.println(tmpSel[1][3]);
+    startingPointRow = 36;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.2.1.5 //
   if (pic == 1215) {
+    display.setTextSize(2);
     int startingPointRow = 0;
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[1][0]);
@@ -1756,9 +2111,9 @@ void drawConfigMenu (void) {
     display.print(tmpSel[1][2]);
     display.print(tmpSel[1][3]);
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(">CONFIRM THRESH");
+    display.print(">CONFIRM");
   }
 
 /*****************************************************************************************
@@ -1769,6 +2124,7 @@ void drawConfigMenu (void) {
   //    LAYER 4  //
   //    CHOICE 1.3.1.1 //
   if (pic == 1311) {
+    display.setTextSize(2);
     int startingPointRow = 0;
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[2][0]);
@@ -1776,159 +2132,173 @@ void drawConfigMenu (void) {
     display.print(tmpSel[2][2]);
     display.print(tmpSel[2][3]);
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
-    currentPointLine = currentPointLine + 4;
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.3.1.2 //
   if (pic == 1312) {
     int startingPointRow = 0;
+    display.setTextSize(2);
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[2][0]);
     display.print(tmpSel[2][1]);
     display.print(tmpSel[2][2]);
     display.print(tmpSel[2][3]);
-    startingPointRow = 6;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 12;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.3.1.3 //
   if (pic == 1313) {
     int startingPointRow = 0;
+    display.setTextSize(2);
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[2][0]);
     display.print(tmpSel[2][1]);
     display.print(tmpSel[2][2]);
     display.print(tmpSel[2][3]);
-    startingPointRow = 12;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 24;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.3.1.4 //
   if (pic == 1314) {
     int startingPointRow = 0;
+    display.setTextSize(2);
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[2][0]);
     display.print(tmpSel[2][1]);
     display.print(tmpSel[2][2]);
     display.print(tmpSel[2][3]);
-    startingPointRow = 18;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 36;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.3.1.5 //
   if (pic == 1315) {
     int startingPointRow = 0;
+    display.setTextSize(2);
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[2][0]);
     display.print(tmpSel[2][1]);
     display.print(tmpSel[2][2]);
     display.print(tmpSel[2][3]);
+    //startingPointRow = 0;
+    //currentPointLine = currentPointLine + 16;
+    //display.setCursor(startingPointRow, currentPointLine);
+    //display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(">CONFIRM THRESH");
+    display.print(">CONFIRM");
   }
 
  //    LAYER 4  //
   //    CHOICE 1.4.1.1 //
   if (pic == 1411) {
     int startingPointRow = 0;
+    display.setTextSize(2);
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[3][0]);
     display.print(tmpSel[3][1]);
     display.print(tmpSel[3][2]);
     display.print(tmpSel[3][3]);
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
-    currentPointLine = currentPointLine + 4;
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.4.1.2 //
   if (pic == 1412) {
     int startingPointRow = 0;
-    display.setCursor(startingPointRow, currentPointLine);
-    display.print(tmpSel[3][0]);
-    display.print(tmpSel[3][1]);
-    display.print(tmpSel[3][2]);
-    display.print(tmpSel[3][3]);
-    startingPointRow = 6;
-    currentPointLine = currentPointLine + 8;
-    display.setCursor(startingPointRow, currentPointLine);
-    display.print("^");
-    startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
-    display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
-  }
-
-  //    LAYER 4  //
-  //    CHOICE 1.4.1.3 //
-  if (pic == 1413) {
-    int startingPointRow = 0;
+    display.setTextSize(2);
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[3][0]);
     display.print(tmpSel[3][1]);
     display.print(tmpSel[3][2]);
     display.print(tmpSel[3][3]);
     startingPointRow = 12;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
+  }
+
+  //    LAYER 4  //
+  //    CHOICE 1.4.1.3 //
+  if (pic == 1413) {
+    int startingPointRow = 0;
+    display.setTextSize(2);
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print(tmpSel[3][0]);
+    display.print(tmpSel[3][1]);
+    display.print(tmpSel[3][2]);
+    display.print(tmpSel[3][3]);
+    startingPointRow = 24;
+    currentPointLine = currentPointLine + 16;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("^");
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
+    display.setCursor(startingPointRow, currentPointLine);
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
   //    CHOICE 1.4.1.4 //
   if (pic == 1414) {
     int startingPointRow = 0;
+    display.setTextSize(2);
     display.setCursor(startingPointRow, currentPointLine);
     display.print(tmpSel[3][0]);
     display.print(tmpSel[3][1]);
     display.print(tmpSel[3][2]);
     display.print(tmpSel[3][3]);
-    startingPointRow = 18;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 36;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
@@ -1940,10 +2310,14 @@ void drawConfigMenu (void) {
     display.print(tmpSel[3][1]);
     display.print(tmpSel[3][2]);
     display.print(tmpSel[3][3]);
+    //startingPointRow = 36;
+    //currentPointLine = currentPointLine + 16;
+    //display.setCursor(startingPointRow, currentPointLine);
+    //display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(">CONFIRM THRESH");
+    display.print(">CONFIRM");
   }
 
  //    LAYER 4  //
@@ -1956,12 +2330,13 @@ void drawConfigMenu (void) {
     display.print(tmpSel[4][2]);
     display.print(tmpSel[4][3]);
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
-    currentPointLine = currentPointLine + 4;
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
@@ -1973,14 +2348,14 @@ void drawConfigMenu (void) {
     display.print(tmpSel[4][1]);
     display.print(tmpSel[4][2]);
     display.print(tmpSel[4][3]);
-    startingPointRow = 6;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 12;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
@@ -1992,14 +2367,14 @@ void drawConfigMenu (void) {
     display.print(tmpSel[4][1]);
     display.print(tmpSel[4][2]);
     display.print(tmpSel[4][3]);
-    startingPointRow = 12;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 24;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
@@ -2011,14 +2386,14 @@ void drawConfigMenu (void) {
     display.print(tmpSel[4][1]);
     display.print(tmpSel[4][2]);
     display.print(tmpSel[4][3]);
-    startingPointRow = 18;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 36;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
@@ -2030,10 +2405,14 @@ void drawConfigMenu (void) {
     display.print(tmpSel[4][1]);
     display.print(tmpSel[4][2]);
     display.print(tmpSel[4][3]);
+    //startingPointRow = 36;
+    //currentPointLine = currentPointLine + 16;
+    //display.setCursor(startingPointRow, currentPointLine);
+    //display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(">CONFIRM THRESH");
+    display.print(">CONFIRM");
   }
 
  //    LAYER 4  //
@@ -2046,12 +2425,13 @@ void drawConfigMenu (void) {
     display.print(tmpSel[5][2]);
     display.print(tmpSel[5][3]);
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
-    currentPointLine = currentPointLine + 4;
+    startingPointRow = 0;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
@@ -2063,14 +2443,14 @@ void drawConfigMenu (void) {
     display.print(tmpSel[5][1]);
     display.print(tmpSel[5][2]);
     display.print(tmpSel[5][3]);
-    startingPointRow = 6;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 12;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
@@ -2082,14 +2462,14 @@ void drawConfigMenu (void) {
     display.print(tmpSel[5][1]);
     display.print(tmpSel[5][2]);
     display.print(tmpSel[5][3]);
-    startingPointRow = 12;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 24;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
@@ -2101,14 +2481,14 @@ void drawConfigMenu (void) {
     display.print(tmpSel[5][1]);
     display.print(tmpSel[5][2]);
     display.print(tmpSel[5][3]);
-    startingPointRow = 18;
-    currentPointLine = currentPointLine + 8;
+    startingPointRow = 36;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
     display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 4;
+    currentPointLine = currentPointLine + 8;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(" CONFIRM THRESH");
+    display.print("CONFIRM");
   }
 
   //    LAYER 4  //
@@ -2120,10 +2500,14 @@ void drawConfigMenu (void) {
     display.print(tmpSel[5][1]);
     display.print(tmpSel[5][2]);
     display.print(tmpSel[5][3]);
+    //startingPointRow = 36;
+    //currentPointLine = currentPointLine + 16;
+    //display.setCursor(startingPointRow, currentPointLine);
+    //display.print("^");
     startingPointRow = 0;
-    currentPointLine = currentPointLine + 8;
+    currentPointLine = currentPointLine + 16;
     display.setCursor(startingPointRow, currentPointLine);
-    display.print(">CONFIRM THRESH");
+    display.print("CONFIRM");
   }
   */
   screenRefresh(); 
@@ -2252,12 +2636,12 @@ void click (void) {
           the user has chosen to select an operator. To support more sensors
           uncomment the according if statements 
      *******************************************************************************/
-    if (pic == 1121) {
-      pic = 1122;
+    if ((pic == 1121) || (pic == 1221)) { /*|| (pic == 1321) || (pic == 1421) || (pic == 1521) || (pic == 1621) to add more sensors add accordingly to the if statement */
+      pic++;
     } else if (pic == 1122) {
         pic = 1121;
-    } else if (pic == 1221) {
-        pic = 1222;
+    //} else if (pic == 1221) {
+        //pic = 1222;
     } else if (pic == 1222) {
         pic = 1221;
     }/*else if (pic == 1321) {
@@ -2495,18 +2879,27 @@ void longPressStart (void) {
           between the two comparison choices to the threshold.
           Uncomment the else if cases according to the number of sensors
     ************************************************************************************************/
+
+    /************************************************************************************************
+          Following section determines the behaviour of long press in the operator choice
+          sub menu. Uncomment the commented else if statements below to support more sensors
+    ************************************************************************************************/    
       if (pic == 1121) {
         dummyOp[0] = -3;
         pic = 1120;
+        menuLayer = menuLayer - 1;
       } else if (pic == 1122) {
           dummyOp[0] = -4;
           pic = 1120;
+          menuLayer = menuLayer - 1;
       } else if (pic == 1221) {
           dummyOp[1] = -3;
           pic = 1220;
+          menuLayer = menuLayer - 1;
       } else if (pic == 1222) {
           dummyOp[1] = -4;
           pic = 1220;
+          menuLayer = menuLayer - 1;
       } /*else if (pic == 1321) {
           dummyOp[2] = -3;
           pic = 1320;
@@ -2532,7 +2925,446 @@ void longPressStart (void) {
           dummyOp[5] = -4;
           pic = 1620;
       }*/
-      menuLayer = menuLayer - 1;
+
+    /************************************************************************************************
+          Following section determines the behaviour of long press in the threshold choice
+          sub menu. Uncomment the commented else if statements below to support more sensors
+    ************************************************************************************************/  
+    //          SENSOR 0           //
+      else if (pic == 1111) {
+        if (tmpSel[0][0] < 1) { //The MSB can't be higher than 1 cause only threshold values between 0 and 1024 are accepted
+          tmpSel[0][0]++;
+          tmpSel[0][1] = 0; //If the MSB is 1 then the 2n MSB can only be 0 since 1024 is the largest threshold value
+          if (tmpSel[0][2] >= 2) {
+            tmpSel[0][2] = 0;
+          }
+          if (tmpSel[0][3] >= 4) {
+            tmpSel[0][3] = 0;
+          }
+        } else {
+            tmpSel[0][0] = 0;
+        }
+        //menuLayer = menuLayer - 1;
+      } else if (pic == 1112) {
+          if (tmpSel[0][0] == 1) {
+            tmpSel[0][1] = 0;
+          } else {
+              if (tmpSel[0][1] < 9) {
+                tmpSel[0][1]++;
+              } else {
+                  tmpSel[0][1] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1113) {
+          if (tmpSel[0][0] == 1) {
+            if (tmpSel[0][2] < 2) {
+              tmpSel[0][2]++;
+            } else {
+                tmpSel[0][2] = 0;
+            }
+          } else {
+              if (tmpSel[0][2] < 9) {
+                tmpSel[0][2]++;
+              } else {
+                  tmpSel[0][2] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1114) {
+          if (tmpSel[0][0] == 1) {
+            if (tmpSel[0][3] < 4) {
+              tmpSel[0][3]++;
+            } else {
+                tmpSel[0][3] = 0;
+            }
+          } else {
+              if (tmpSel[0][3] < 9) {
+                tmpSel[0][3]++;
+              } else {
+                  tmpSel[0][3] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1115) {
+          dummyZero[0] = (tmpSel[0][0]*1000) + (tmpSel[0][1]*100) + (tmpSel[0][2]*10) + tmpSel[0][3] ;
+          menuLayer = menuLayer - 1;
+          pic = 1110;
+      }
+      //menuLayer = menuLayer - 1;
+
+    //          SENSOR 1           //
+      else if (pic == 1211) {
+        if (tmpSel[1][0] < 1) { //The MSB can't be higher than 1 cause only threshold values between 0 and 1024 are accepted
+          tmpSel[1][0]++;
+          tmpSel[1][1] = 0; //If the MSB is 1 then the 2n MSB can only be 0 since 1024 is the largest threshold value
+          if (tmpSel[1][2] >= 2) {
+            tmpSel[1][2] = 0;
+          }
+          if (tmpSel[1][3] >= 4) {
+            tmpSel[1][3] = 0;
+          }
+        } else {
+            tmpSel[1][0] = 0;
+        }
+        //menuLayer = menuLayer - 1;
+      } else if (pic == 1212) {
+          if (tmpSel[1][0] == 1) {
+            tmpSel[1][1] = 0;
+          } else {
+              if (tmpSel[1][1] < 9) {
+                tmpSel[1][1]++;
+              } else {
+                  tmpSel[1][1] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1213) {
+          if (tmpSel[1][0] == 1) {
+            if (tmpSel[1][2] < 2) {
+              tmpSel[1][2]++;
+            } else {
+                tmpSel[1][2] = 0;
+            }
+          } else {
+              if (tmpSel[1][2] < 9) {
+                tmpSel[1][2]++;
+              } else {
+                  tmpSel[1][2] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1214) {
+          if (tmpSel[1][0] == 1) {
+            if (tmpSel[1][3] < 4) {
+              tmpSel[1][3]++;
+            } else {
+                tmpSel[1][3] = 0;
+            }
+          } else {
+              if (tmpSel[1][3] < 9) {
+                tmpSel[1][3]++;
+              } else {
+                  tmpSel[1][3] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1215) {
+          dummyZero[1] = (tmpSel[1][0]*1000) + (tmpSel[1][1]*100) + (tmpSel[1][2]*10) + tmpSel[1][3] ;
+          menuLayer = menuLayer - 1;
+          pic = 1210;
+      }
+    /*
+    //          SENSOR 2           //
+      else if (pic == 1311) {
+        if (tmpSel[2][0] < 1) { //The MSB can't be higher than 1 cause only threshold values between 0 and 1024 are accepted
+          tmpSel[2][0]++;
+          tmpSel[2][1] = 0; //If the MSB is 1 then the 2n MSB can only be 0 since 1024 is the largest threshold value
+          if (tmpSel[2][2] >= 2) {
+            tmpSel[2][2] = 0;
+          }
+          if (tmpSel[2][3] >= 4) {
+            tmpSel[2][3] = 0;
+          }
+        } else {
+            tmpSel[2][0] = 0;
+        }
+        //menuLayer = menuLayer - 1;
+      } else if (pic == 1312) {
+          if (tmpSel[2][0] == 1) {
+            tmpSel[2][1] = 0;
+          } else {
+              if (tmpSel[2][1] < 9) {
+                tmpSel[2][1]++;
+              } else {
+                  tmpSel[2][1] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1313) {
+          if (tmpSel[2][0] == 1) {
+            if (tmpSel[2][2] < 2) {
+              tmpSel[2][2]++;
+            } else {
+                tmpSel[2][2] = 0;
+            }
+          } else {
+              if (tmpSel[2][2] < 9) {
+                tmpSel[2][2]++;
+              } else {
+                  tmpSel[2][2] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1314) {
+          if (tmpSel[2][0] == 1) {
+            if (tmpSel[2][3] < 4) {
+              tmpSel[2][3]++;
+            } else {
+                tmpSel[2][3] = 0;
+            }
+          } else {
+              if (tmpSel[2][3] < 9) {
+                tmpSel[2][3]++;
+              } else {
+                  tmpSel[2][3] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1315) {
+          dummyZero[2] = (tmpSel[2][0]*1000) + (tmpSel[2][1]*100) + (tmpSel[1][2]*10) + tmpSel[2][3] ;
+          menuLayer = menuLayer - 1;
+          pic = 1310;
+      }
+
+    //          SENSOR 3           //
+      else if (pic == 1411) {
+        if (tmpSel[3][0] < 1) { //The MSB can't be higher than 1 cause only threshold values between 0 and 1024 are accepted
+          tmpSel[3][0]++;
+          tmpSel[3][1] = 0; //If the MSB is 1 then the 2n MSB can only be 0 since 1024 is the largest threshold value
+          if (tmpSel[3][2] >= 2) {
+            tmpSel[3][2] = 0;
+          }
+          if (tmpSel[3][3] >= 4) {
+            tmpSel[3][3] = 0;
+          }
+        } else {
+            tmpSel[3][0] = 0;
+        }
+        //menuLayer = menuLayer - 1;
+      } else if (pic == 1412) {
+          if (tmpSel[3][0] == 1) {
+            tmpSel[3][1] = 0;
+          } else {
+              if (tmpSel[3][1] < 9) {
+                tmpSel[3][1]++;
+              } else {
+                  tmpSel[3][1] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1413) {
+          if (tmpSel[3][0] == 1) {
+            if (tmpSel[3][2] < 2) {
+              tmpSel[3][2]++;
+            } else {
+                tmpSel[3][2] = 0;
+            }
+          } else {
+              if (tmpSel[3][2] < 9) {
+                tmpSel[3][2]++;
+              } else {
+                  tmpSel[3][2] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1414) {
+          if (tmpSel[3][0] == 1) {
+            if (tmpSel[3][3] < 4) {
+              tmpSel[3][3]++;
+            } else {
+                tmpSel[3][3] = 0;
+            }
+          } else {
+              if (tmpSel[3][3] < 9) {
+                tmpSel[3][3]++;
+              } else {
+                  tmpSel[3][3] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1415) {
+          dummyZero[3] = (tmpSel[3][0]*1000) + (tmpSel[3][1]*100) + (tmpSel[3][2]*10) + tmpSel[3][3] ;
+          menuLayer = menuLayer - 1;
+          pic = 1410;
+      }    
+
+    //          SENSOR 4           //
+      else if (pic == 1511) {
+        if (tmpSel[4][0] < 1) { //The MSB can't be higher than 1 cause only threshold values between 0 and 1024 are accepted
+          tmpSel[4][0]++;
+          tmpSel[4][1] = 0; //If the MSB is 1 then the 2n MSB can only be 0 since 1024 is the largest threshold value
+          if (tmpSel[4][2] >= 2) {
+            tmpSel[4][2] = 0;
+          }
+          if (tmpSel[4][3] >= 4) {
+            tmpSel[4][3] = 0;
+          }
+        } else {
+            tmpSel[4][0] = 0;
+        }
+        //menuLayer = menuLayer - 1;
+      } else if (pic == 1512) {
+          if (tmpSel[4][0] == 1) {
+            tmpSel[4][1] = 0;
+          } else {
+              if (tmpSel[4][1] < 9) {
+                tmpSel[4][1]++;
+              } else {
+                  tmpSel[4][1] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1513) {
+          if (tmpSel[4][0] == 1) {
+            if (tmpSel[4][2] < 2) {
+              tmpSel[4][2]++;
+            } else {
+                tmpSel[4][2] = 0;
+            }
+          } else {
+              if (tmpSel[4][2] < 9) {
+                tmpSel[4][2]++;
+              } else {
+                  tmpSel[4][2] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1514) {
+          if (tmpSel[4][0] == 1) {
+            if (tmpSel[4][3] < 4) {
+              tmpSel[4][3]++;
+            } else {
+                tmpSel[4][3] = 0;
+            }
+          } else {
+              if (tmpSel[4][3] < 9) {
+                tmpSel[4][3]++;
+              } else {
+                  tmpSel[4][3] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1515) {
+          dummyZero[4] = (tmpSel[4][0]*1000) + (tmpSel[4][1]*100) + (tmpSel[4][2]*10) + tmpSel[4][3] ;
+          menuLayer = menuLayer - 1;
+          pic = 1510;
+      }          
+
+    //          SENSOR 4           //
+      else if (pic == 1511) {
+        if (tmpSel[4][0] < 1) { //The MSB can't be higher than 1 cause only threshold values between 0 and 1024 are accepted
+          tmpSel[4][0]++;
+          tmpSel[4][1] = 0; //If the MSB is 1 then the 2n MSB can only be 0 since 1024 is the largest threshold value
+          if (tmpSel[4][2] >= 2) {
+            tmpSel[4][2] = 0;
+          }
+          if (tmpSel[4][3] >= 4) {
+            tmpSel[4][3] = 0;
+          }
+        } else {
+            tmpSel[4][0] = 0;
+        }
+        //menuLayer = menuLayer - 1;
+      } else if (pic == 1512) {
+          if (tmpSel[4][0] == 1) {
+            tmpSel[4][1] = 0;
+          } else {
+              if (tmpSel[4][1] < 9) {
+                tmpSel[4][1]++;
+              } else {
+                  tmpSel[4][1] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1513) {
+          if (tmpSel[4][0] == 1) {
+            if (tmpSel[4][2] < 2) {
+              tmpSel[4][2]++;
+            } else {
+                tmpSel[4][2] = 0;
+            }
+          } else {
+              if (tmpSel[4][2] < 9) {
+                tmpSel[4][2]++;
+              } else {
+                  tmpSel[4][2] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1514) {
+          if (tmpSel[4][0] == 1) {
+            if (tmpSel[4][3] < 4) {
+              tmpSel[4][3]++;
+            } else {
+                tmpSel[4][3] = 0;
+            }
+          } else {
+              if (tmpSel[4][3] < 9) {
+                tmpSel[4][3]++;
+              } else {
+                  tmpSel[4][3] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1515) {
+          dummyZero[4] = (tmpSel[4][0]*1000) + (tmpSel[4][1]*100) + (tmpSel[4][2]*10) + tmpSel[4][3] ;
+          menuLayer = menuLayer - 1;
+          pic = 1510;
+      }   
+
+    //          SENSOR 5           //
+      else if (pic == 1611) {
+        if (tmpSel[5][0] < 1) { //The MSB can't be higher than 1 cause only threshold values between 0 and 1024 are accepted
+          tmpSel[5][0]++;
+          tmpSel[5][1] = 0; //If the MSB is 1 then the 2n MSB can only be 0 since 1024 is the largest threshold value
+          if (tmpSel[5][2] >= 2) {
+            tmpSel[5][2] = 0;
+          }
+          if (tmpSel[5][3] >= 4) {
+            tmpSel[5][3] = 0;
+          }
+        } else {
+            tmpSel[5][0] = 0;
+        }
+        //menuLayer = menuLayer - 1;
+      } else if (pic == 1612) {
+          if (tmpSel[5][0] == 1) {
+            tmpSel[5][1] = 0;
+          } else {
+              if (tmpSel[5][1] < 9) {
+                tmpSel[5][1]++;
+              } else {
+                  tmpSel[5][1] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1613) {
+          if (tmpSel[5][0] == 1) {
+            if (tmpSel[5][2] < 2) {
+              tmpSel[5][2]++;
+            } else {
+                tmpSel[5][2] = 0;
+            }
+          } else {
+              if (tmpSel[5][2] < 9) {
+                tmpSel[5][2]++;
+              } else {
+                  tmpSel[5][2] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1614) {
+          if (tmpSel[5][0] == 1) {
+            if (tmpSel[5][3] < 4) {
+              tmpSel[5][3]++;
+            } else {
+                tmpSel[5][3] = 0;
+            }
+          } else {
+              if (tmpSel[5][3] < 9) {
+                tmpSel[5][3]++;
+              } else {
+                  tmpSel[5][3] = 0;
+              }
+          }
+          //menuLayer = menuLayer - 1;
+      } else if (pic == 1615) {
+          dummyZero[5] = (tmpSel[5][0]*1000) + (tmpSel[5][1]*100) + (tmpSel[5][2]*10) + tmpSel[5][3] ;
+          menuLayer = menuLayer - 1;
+          pic = 1610;
+      }                       
+      */
   }
 }
 
@@ -2619,13 +3451,33 @@ void screenRefresh (void) {
 }
 
 /*************************************************************************
-       This function is helps us know the value of each digit 
-       of a sensor temporary threshold.
- *************************************************************************/
-/*void calculateTmpSel (int node) {
-  tmpSel[node][0] = 0;
-  tmpSel[node][1] = (dummyZero[node] / 100);
-  tmpSel[node][2] = (dummyZero[node] / 10) % 10;
-  tmpSel[node][3] = dummyZero[node] % 10;
+       This function is called of by the drawConfig function
+       when the first layer of the menu is to be shown
+*************************************************************************/
+void drawConfigMenuLayer1 () {
   
-}*/
+}
+
+/*************************************************************************
+       This function is called of by the drawConfig function
+       when the second layer of the menu is to be shown
+*************************************************************************/
+void drawConfigMenuLayer2 () {
+  
+}
+
+/*************************************************************************
+       This function is called of by the drawConfig function
+       when the third layer of the menu is to be shown
+*************************************************************************/
+void drawConfigMenuLayer3 () {
+  
+}
+
+/*************************************************************************
+       This function is called of by the drawConfig function
+       when the fourth layer of the menu is to be shown
+*************************************************************************/
+void drawConfigMenuLayer4() {
+  
+}
