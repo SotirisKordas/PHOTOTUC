@@ -1,2 +1,2 @@
-# trigger-device-master
+# PHOTOTUC
 Master branh and codes for my Diploma Thesis 
