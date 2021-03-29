@@ -1,2 +1,2 @@
 # PHOTOTUC
-Source Code and Related filed of my Diploma Thesis
+Source Code and Related files of my Diploma Thesis
